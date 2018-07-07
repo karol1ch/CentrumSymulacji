@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.model.Scenario;
 
 
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 import static sample.controller.ScenarioController.*;
 
 public class MainMenuController implements Initializable {
+
 
     @FXML
     private Button startMainMenu;
@@ -40,8 +42,6 @@ public class MainMenuController implements Initializable {
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-            ScenarioController.setText();
-
         }
             else if(event.getSource() == editMainMenu){
             System.out.println("2");
