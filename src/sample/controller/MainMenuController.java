@@ -4,16 +4,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sample.model.Scenario;
 
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+
+import static sample.controller.ScenarioController.*;
 
 public class MainMenuController implements Initializable {
 
@@ -29,13 +35,15 @@ public class MainMenuController implements Initializable {
         Stage stage;
         Parent root;
         if(event.getSource() == startMainMenu){
-            stage = (Stage) startMainMenu.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("view" + File.separator + "scenario.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/sample"+ File.separator + "view"+ File.separator +"scenario.fxml"));
             Scene scene = new Scene(root);
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+            ScenarioController.setText();
+
         }
-        else if(event.getSource() == editMainMenu){
+            else if(event.getSource() == editMainMenu){
             System.out.println("2");
         }
         else if(event.getSource() == addMainMenu){

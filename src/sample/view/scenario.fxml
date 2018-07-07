@@ -14,7 +14,7 @@
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="300.0" style="-fx-background-color: #336699;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="returnToMainMenu" defaultButton="true" mnemonicParsing="false" onAction="#handleButtonAction" text="Main Menu" />
-            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" text="Nazwa" textAlignment="CENTER">
+            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="748.0" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="27.0" />
                </font>
