@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sample.AppStatus;
 import sample.Main;
 import sample.model.Scenario;
 
@@ -20,6 +21,8 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ScenarioController implements Initializable {
+
+    private AppStatus appStatus;
 
     @FXML
     private Button returnToMainMenu;
@@ -46,15 +49,12 @@ public class ScenarioController implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
         try {
-            File file = new File("Scenariusze" + File.separator + "ScenariuszPierwszy.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
-            String description = reader.readLine();
-            ArrayList<String> components = new ArrayList<>(Arrays.asList(description.split(";")));
-            reader.close();
-            Scenario scenario = new Scenario();
-            scenario.setName(components.get(0));
+            appStatus = new AppStatus();
+            Scenario scenario = appStatus.loadScenario();
             scenarioName.setText(scenario.getName());
-        } catch (IOException e){
+
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
