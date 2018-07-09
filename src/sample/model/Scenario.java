@@ -1,6 +1,8 @@
 package sample.model;
 
-public class Scenario {
+import java.util.List;
+
+public class Scenario{
 
 
     private String name;

@@ -3,32 +3,29 @@ package sample.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import sample.AppStatus;
 import sample.Main;
 import sample.model.Scenario;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class ScenarioController implements Initializable {
-
-    private AppStatus appStatus;
+public class ScenarioController extends AbstractController {
 
     @FXML
     private Button returnToMainMenu;
 
     @FXML
     private Label scenarioName;
+
+    public ScenarioController(Main mainApp) {
+        super(mainApp);
+    }
 
 
     @FXML
@@ -48,15 +45,7 @@ public class ScenarioController implements Initializable {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-        try {
-            appStatus = new AppStatus();
-            Scenario scenario = appStatus.loadScenario();
-            scenarioName.setText(scenario.getName());
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Scenario scenario = mainApp.getAppState().getScenarioToShow();
+        scenarioName.setText(scenario.getName());
     }
 }
