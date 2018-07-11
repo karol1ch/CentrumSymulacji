@@ -17,10 +17,8 @@ public class MainController extends AbstractController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String userMessage = mainApp.getAppState().getUserMessage();
-        if(userMessage != null && !userMessage.isEmpty()) {
-            userMessagesLabel.setText(userMessage);
-        }
+        userMessagesLabel.textProperty().bindBidirectional(mainApp.getAppState().userMessageProperty());
+
     }
 
 

@@ -64,9 +64,9 @@ public class ChooseScenarioController extends AbstractController{
             @Override
             public void changed(ObservableValue<? extends Scenario> observable, Scenario oldValue, Scenario newValue) {
                 if(newValue != null){
-                    runScenarioButton.disableProperty().setValue(false);
+                    runScenarioButton.setDisable(false);
                 }else{
-                    runScenarioButton.disableProperty().setValue(true);
+                    runScenarioButton.setDisable(true);
                 }
             }
         });

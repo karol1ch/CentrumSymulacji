@@ -1,17 +1,25 @@
 package sample.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AppState {
 
 
     private Scenario scenarioToShow;
-    private String userMessage;
+    private StringProperty userMessage;
     private List<Scenario> allScenarios;
+
+    public AppState() {
+        userMessage = new SimpleStringProperty("Nothing to say");
+        allScenarios = new LinkedList<>();
+    }
 
     public Scenario loadScenario() throws IOException {
         File file = new File("Scenariusze" + File.separator + "ScenariuszPierwszy.txt");
@@ -33,12 +41,13 @@ public class AppState {
     }
 
     public void setUserMessage(String userMessage) {
-        this.userMessage = userMessage;
+        this.userMessage.set(userMessage);
     }
 
     public String getUserMessage() {
-        return userMessage;
+        return userMessage.get();
     }
+
 
     public void setAllScenarios(List<Scenario> allScenarios) {
         this.allScenarios = allScenarios;
@@ -46,5 +55,9 @@ public class AppState {
 
     public List<Scenario> getAllScenarios() {
         return allScenarios;
+    }
+
+    public StringProperty userMessageProperty() {
+        return userMessage;
     }
 }

@@ -30,16 +30,7 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private void handleButtonAction (ActionEvent actionEvent) throws IOException{
-        Stage stage;
-        Parent root;
-
-        if (actionEvent.getSource() == returnToMainMenu){
-            stage = (Stage) returnToMainMenu.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("/sample"+ File.separator + "view" + File.separator +"mainMenu.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
+        mainApp.initMainMenuView();
     }
 
 

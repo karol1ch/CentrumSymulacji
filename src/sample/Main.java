@@ -6,10 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import sample.controller.AbstractController;
-import sample.controller.ChooseScenarioController;
-import sample.controller.MainMenuController;
-import sample.controller.ScenarioController;
+import sample.controller.*;
 import sample.model.AppState;
 import sample.model.Scenario;
 
@@ -28,8 +25,10 @@ public class Main extends Application {
     private BorderPane mainRoot;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader();
-        mainRoot = loader.load(getClass().getResource("view" + File.separator +"main.fxml"));
+        URL resource = getClass().getResource("view" + File.separator + "main.fxml");
+        FXMLLoader loader = new FXMLLoader(resource);
+        loader.setController(new MainController(this));
+        mainRoot = loader.load();
         primaryStage.setTitle("Centrum Symulacji");
         primaryStage.setScene(new Scene(mainRoot));
         primaryStage.show();
@@ -55,6 +54,7 @@ public class Main extends Application {
         loader.setController(controller);
         Parent view = loader.load();
         mainRoot.setCenter(view);
+        appState.setUserMessage("View "+path+" init");
     }
 
 
@@ -72,6 +72,7 @@ public class Main extends Application {
             List<Scenario> scenarios = scenariosLoader.loadScenarios("Scenariusze");
             if(scenarios.size() > 0) {
                 appState.setAllScenarios(scenarios);
+                appState.setUserMessage("ScenariosLoaded");
             }else{
                 //TODO zrobienie z userMessage property zbindowanego do widoku main w kontrolerze MainController
                 appState.setUserMessage("Nie wczytałsię żaden scenariusz. Sprawdź scieżkę");
