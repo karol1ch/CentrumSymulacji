@@ -1,9 +1,9 @@
-Z�amanie oka;
+Złamanie oka;
 1;A;2
 2;B;3
 3;C;4 5
 4;D;6
 5;E;7
 6;F;7
-7;G;
-
+7;G;8
+8;H;

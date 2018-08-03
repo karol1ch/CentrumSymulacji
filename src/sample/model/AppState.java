@@ -13,11 +13,9 @@ public class AppState {
 
 
     private Scenario scenarioToShow;
-    private StringProperty userMessage;
     private List<Scenario> allScenarios;
 
     public AppState() {
-        userMessage = new SimpleStringProperty("Nothing to say");
         allScenarios = new LinkedList<>();
     }
 
@@ -29,15 +27,6 @@ public class AppState {
         this.scenarioToShow = scenarioToShow;
     }
 
-    public void setUserMessage(String userMessage) {
-        this.userMessage.set(userMessage);
-    }
-
-    public String getUserMessage() {
-        return userMessage.get();
-    }
-
-
     public void setAllScenarios(List<Scenario> allScenarios) {
         this.allScenarios = allScenarios;
     }
@@ -46,7 +35,4 @@ public class AppState {
         return allScenarios;
     }
 
-    public StringProperty userMessageProperty() {
-        return userMessage;
-    }
 }

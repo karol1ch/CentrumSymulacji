@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="300.0" style="-fx-background-color: #336699;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="returnToMainMenu" defaultButton="true" mnemonicParsing="false" onAction="#handleButtonAction" text="Main Menu" />
+            <Button fx:id="returnToMainMenu" defaultButton="true" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" text="Main Menu" />
             <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="748.0" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="27.0" />
@@ -41,6 +41,9 @@
       </VBox>
    </left>
    <bottom>
-      <ButtonBar prefHeight="250.0" prefWidth="1200.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER" />
+      <ButtonBar prefHeight="250.0" prefWidth="1200.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
+         <buttons>
+            <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStartButtonAction" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
+         </buttons></ButtonBar>
    </bottom>
 </BorderPane>

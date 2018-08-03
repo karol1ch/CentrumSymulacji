@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,6 +27,12 @@ public class ChooseScenarioController extends AbstractController{
 
     @FXML
     private Button runScenarioButton;
+
+    @FXML
+    private Button editScenarioButton;
+
+    @FXML
+    private Button newScenarioButton;
 
     public ChooseScenarioController(Main mainApp) {
         super(mainApp);
@@ -65,8 +72,13 @@ public class ChooseScenarioController extends AbstractController{
             public void changed(ObservableValue<? extends Scenario> observable, Scenario oldValue, Scenario newValue) {
                 if(newValue != null){
                     runScenarioButton.setDisable(false);
+                    editScenarioButton.setDisable(false);
+                    newScenarioButton.setDisable(false);
+
                 }else{
                     runScenarioButton.setDisable(true);
+                    editScenarioButton.setDisable(true);
+                    newScenarioButton.setDisable(true);
                 }
             }
         });
@@ -84,7 +96,21 @@ public class ChooseScenarioController extends AbstractController{
             }
         });
 
-    }
+        editScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("edytuje"); //TODO
+            }
+        });
 
+        newScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("dodaje");  //TODO
+
+            }
+        });
+
+    }
 
 }

@@ -21,16 +21,24 @@ public class ScenarioController extends AbstractController {
     private Button returnToMainMenu;
 
     @FXML
+    private  Button startButton;
+
+    @FXML
     private Label scenarioName;
 
     public ScenarioController(Main mainApp) {
         super(mainApp);
     }
 
+    @FXML
+    private void handleMainMenuButtonAction( ActionEvent actionEvent) throws IOException{
+        mainApp.initChooseScenarioView();
+    }
 
     @FXML
-    private void handleButtonAction (ActionEvent actionEvent) throws IOException{
-        mainApp.initMainMenuView();
+    private void handleStartButtonAction( ActionEvent actionEvent) throws IOException {
+        //Start apki
+        System.out.println("dziala");
     }
 
 

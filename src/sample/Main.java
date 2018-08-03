@@ -19,7 +19,6 @@ import java.util.List;
 public class Main extends Application {
     public static final String CHOOSE_SCENARIO_VIEW = "view" + File.separator + "chooseScenario.fxml";
     public static final String SCENARIO_VIEW = "view" + File.separator + "scenario.fxml";
-    public static final String MAIN_MENU_VIEW = "view" + File.separator + "mainMenu.fxml";
 
     private AppState appState = new AppState();
     private BorderPane mainRoot;
@@ -33,11 +32,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(mainRoot));
         primaryStage.show();
 
-       initMainMenuView();
-    }
-
-    public void initMainMenuView() throws IOException {
-        initView(MAIN_MENU_VIEW, new MainMenuController(this));
+      initChooseScenarioView();
     }
 
     public void initScenarioView() throws IOException {
@@ -54,7 +49,6 @@ public class Main extends Application {
         loader.setController(controller);
         Parent view = loader.load();
         mainRoot.setCenter(view);
-        appState.setUserMessage("View "+path+" init");
     }
 
 
@@ -72,14 +66,11 @@ public class Main extends Application {
             List<Scenario> scenarios = scenariosLoader.loadScenarios("Scenariusze");
             if(scenarios.size() > 0) {
                 appState.setAllScenarios(scenarios);
-                appState.setUserMessage("ScenariosLoaded");
             }else{
                 //TODO zrobienie z userMessage property zbindowanego do widoku main w kontrolerze MainController
-                appState.setUserMessage("Nie wczytałsię żaden scenariusz. Sprawdź scieżkę");
 
             }
         } catch (IOException e) {
-            appState.setUserMessage("Nie wczytało się");
         }
     }
 }
