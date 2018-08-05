@@ -41,7 +41,7 @@
       </VBox>
    </left>
    <bottom>
-      <ButtonBar prefHeight="250.0" prefWidth="1200.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
+      <ButtonBar fx:id="buttonBar" prefHeight="250.0" prefWidth="1200.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
          <buttons>
             <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStartButtonAction" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
          </buttons></ButtonBar>

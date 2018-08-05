@@ -1,21 +1,19 @@
 package sample.model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 
 public class Scenario{
 
     private String name;
 
-    private LinkedList<State> stateArrayList;
+    private Map<Integer,State> states;
 
-    public LinkedList<State> getStateArrayList() {
-        return stateArrayList;
+    public Map<Integer,State> getStates() {
+        return states;
     }
 
-    public void setStateArrayList(LinkedList<State> stateArrayList) {
-        this.stateArrayList = stateArrayList;
+    public void setStates(Map<Integer, State> stateArrayList) {
+        this.states = stateArrayList;
     }
 
     public String getName() {
@@ -26,4 +24,7 @@ public class Scenario{
         this.name = name;
     }
 
+    public State getInitialState() {
+        return states.get(1);
+    }
 }

@@ -4,7 +4,6 @@ import sample.model.Scenario;
 import sample.model.State;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +23,7 @@ public class ScenariosLoader {
 
     private Scenario readScenarioFromFile(File file) {
         BufferedReader reader = null;
-        LinkedList <State> stateArrayList = new LinkedList<>();
+        Map <Integer,State> states = new HashMap<>();
         try {
             Scenario scenario = new Scenario();
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
@@ -34,10 +33,10 @@ public class ScenariosLoader {
                 State state = new State();
                 description = reader.readLine();
                 String[] stateDescription = description.split(";");
+                Integer tempInt = Integer.parseInt(stateDescription[0]);
+                state.setNumber(tempInt);
+                state.setName(stateDescription[1]);
                 if (stateDescription.length == 3){
-                    Integer tempInt = Integer.parseInt(stateDescription[0]);
-                    state.setNumber(tempInt);
-                    state.setName(stateDescription[1]);
                     LinkedList<Integer> childrenList = new LinkedList<>();
                     String[] childrenArray = stateDescription[2].split(" ");
                     for( int i = 0; i < childrenArray.length; i++){
@@ -45,20 +44,16 @@ public class ScenariosLoader {
                         childrenList.add(tempInt);
                     }
                     state.setChildren(childrenList);
-                    stateArrayList.add(state);
+                    states.put(state.getNumber(),state);
                 }
                 else if (stateDescription.length == 2){
-                    Integer tempInt = Integer.parseInt(stateDescription[0]);
-                    state.setNumber(tempInt);
-                    state.setName(stateDescription[1]);
                     state.setChildren(null);
-                    stateArrayList.add(state);
+                    states.put(state.getNumber(),state);
                     break;
                 }
-
             }
             reader.close();
-            scenario.setStateArrayList(stateArrayList);
+            scenario.setStates(states);
             scenario.setName(components.get(0));
             return scenario;
         } catch (Exception e) {
