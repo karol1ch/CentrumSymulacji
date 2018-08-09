@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,10 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.model.Scenario;
@@ -29,18 +30,23 @@ public class ScenarioController extends AbstractController {
     private Scenario currentScenario;
     private State currentState;
 
+    private int iterator = 0;
+
+    ObservableList <String> items = FXCollections.observableArrayList();
 
     @FXML
     private Button returnToMainMenu;
 
     @FXML
     private  Button startButton;
-
     @FXML
     private Label scenarioName;
 
     @FXML
     private ButtonBar buttonBar;
+
+    @FXML
+    private ListView<String> listView;
 
     public ScenarioController(Main mainApp) {
         super(mainApp);
@@ -59,7 +65,11 @@ public class ScenarioController extends AbstractController {
     }
 
     private void updateScenarioStateView() {
-        LinkedList<Integer> children = currentState.getChildren();
+        iterator++;
+        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listView.setItems(items);
+        addToList(iterator +". " + currentState.getName());
+        List<Integer> children = currentState.getChildren();
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());
             button.setOnAction((e)->{
@@ -70,6 +80,10 @@ public class ScenarioController extends AbstractController {
         }).collect(Collectors.toList());
         buttonBar.getButtons().removeAll(buttonBar.getButtons());
         buttonBar.getButtons().addAll(nextStepButtons);
+    }
+
+    public void addToList(String string){
+        items.add(string);
     }
 
 

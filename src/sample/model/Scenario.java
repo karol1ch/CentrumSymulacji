@@ -1,5 +1,7 @@
 package sample.model;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Scenario{
@@ -25,6 +27,11 @@ public class Scenario{
     }
 
     public State getInitialState() {
-        return states.get(1);
+        State state = new State();
+        state.setNumber(-1);
+        state.setName("fake state");
+        state.setChildren(Collections.singletonList(1));
+        return state;
     }
+
 }

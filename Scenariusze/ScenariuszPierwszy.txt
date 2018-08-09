@@ -3,6 +3,6 @@ Złamanie nogi;
 2;B;3
 3;C;4 5
 4;D;6
-5;E;7
-6;F;7
+5;Esssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;7
+6;Fdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;7
 7;G;

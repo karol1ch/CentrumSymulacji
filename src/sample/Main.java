@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Main extends Application {
     public static final String CHOOSE_SCENARIO_VIEW = "view" + File.separator + "chooseScenario.fxml";
     public static final String SCENARIO_VIEW = "view" + File.separator + "scenario.fxml";
+    public static final String CHANGE_SCENARIO_VIEW = "view" + File.separator + "changeScenario.fxml";
 
     private AppState appState = new AppState();
     private BorderPane mainRoot;
@@ -29,7 +31,8 @@ public class Main extends Application {
         loader.setController(new MainController(this));
         mainRoot = loader.load();
         primaryStage.setTitle("Centrum Symulacji");
-        primaryStage.setScene(new Scene(mainRoot));
+        Scene scene = new Scene(mainRoot);
+        primaryStage.setScene(scene);
         primaryStage.show();
 
       initChooseScenarioView();
@@ -41,6 +44,10 @@ public class Main extends Application {
 
     public void initChooseScenarioView() throws IOException {
         initView(CHOOSE_SCENARIO_VIEW, new ChooseScenarioController(this));
+    }
+
+    public void initChangeScenarioView() throws IOException {
+        initView(CHANGE_SCENARIO_VIEW, new ChangeScenarioController(this));
     }
 
     private void initView( String path, AbstractController controller) throws IOException {

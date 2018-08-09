@@ -1,12 +1,12 @@
 package sample.model;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class State {
 
     private int number;
 
-    private LinkedList<Integer> children;
+    private List<Integer> children;
 
     private String name;
 
@@ -18,11 +18,11 @@ public class State {
         this.number = number;
     }
 
-    public LinkedList<Integer> getChildren() {
+    public List<Integer> getChildren() {
         return children;
     }
 
-    public void setChildren(LinkedList<Integer> children) {
+    public void setChildren(List<Integer> children) {
         this.children = children;
     }
 

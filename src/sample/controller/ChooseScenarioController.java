@@ -96,11 +96,14 @@ public class ChooseScenarioController extends AbstractController{
             }
         });
 
-        editScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("edytuje"); //TODO
+        editScenarioButton.setOnAction(event -> {
+            mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
+            try {
+                mainApp.initChangeScenarioView();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            System.out.println("edytuje");
         });
 
         newScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
