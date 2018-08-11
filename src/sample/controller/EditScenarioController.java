@@ -6,12 +6,12 @@ import sample.model.Scenario;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ChangeScenarioController extends AbstractController {
+public class EditScenarioController extends AbstractController {
 
-    Scenario currentScenario;
+    private Scenario currentScenario;
 
 
-    public ChangeScenarioController(Main mainApp) {
+    public EditScenarioController(Main mainApp) {
         super(mainApp);
     }
 

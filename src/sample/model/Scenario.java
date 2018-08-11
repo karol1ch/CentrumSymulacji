@@ -26,10 +26,10 @@ public class Scenario{
         this.name = name;
     }
 
-    public State getInitialState() {
+    public State getIniialState() {
         State state = new State();
         state.setNumber(-1);
-        state.setName("fake state");
+        state.setName("");
         state.setChildren(Collections.singletonList(1));
         return state;
     }

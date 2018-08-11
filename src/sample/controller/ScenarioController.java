@@ -11,9 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import sample.Main;
 import sample.model.Scenario;
 import sample.model.State;
@@ -32,6 +36,8 @@ public class ScenarioController extends AbstractController {
 
     private int iterator = 0;
 
+    private Text text;
+
     ObservableList <String> items = FXCollections.observableArrayList();
 
     @FXML
@@ -47,6 +53,9 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private ListView<String> listView;
+
+    @FXML
+    private BorderPane borderPane;
 
     public ScenarioController(Main mainApp) {
         super(mainApp);
@@ -64,11 +73,31 @@ public class ScenarioController extends AbstractController {
         updateScenarioStateView();
     }
 
+
+    private void setWrapping(){
+        listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                ListCell<String> cell = new ListCell<String>() {
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            Text text = new Text(item);
+                            text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
+                            setGraphic(text);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+    }
+
+
     private void updateScenarioStateView() {
-        iterator++;
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listView.setItems(items);
-        addToList(iterator +". " + currentState.getName());
+        listView.setItems(items);  // items -> stateHistoryList
+        addToList(currentState.getName());
         List<Integer> children = currentState.getChildren();
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());
@@ -80,6 +109,12 @@ public class ScenarioController extends AbstractController {
         }).collect(Collectors.toList());
         buttonBar.getButtons().removeAll(buttonBar.getButtons());
         buttonBar.getButtons().addAll(nextStepButtons);
+        setWrapping();
+
+
+        if(nextStepButtons.isEmpty()){
+            //TODO
+        }
     }
 
     public void addToList(String string){
@@ -91,6 +126,11 @@ public class ScenarioController extends AbstractController {
     public void initialize (URL location, ResourceBundle resources) {
         currentScenario = mainApp.getAppState().getScenarioToShow();
         scenarioName.setText(currentScenario.getName());
-        currentState = currentScenario.getInitialState();
+        currentState = currentScenario.getIniialState();
+
     }
+
+
+
+
 }

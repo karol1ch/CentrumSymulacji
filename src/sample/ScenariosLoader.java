@@ -47,7 +47,7 @@ public class ScenariosLoader {
                     states.put(state.getNumber(),state);
                 }
                 else if (stateDescription.length == 2){
-                    state.setChildren(null);
+                    state.setChildren(Collections.emptyList());
                     states.put(state.getNumber(),state);
                     break;
                 }

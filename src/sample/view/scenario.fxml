@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane stylesheets="/sample/css/appStyle.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" spacing="300.0" style="-fx-background-color: #336699;" BorderPane.alignment="CENTER">
+      <HBox prefHeight="50.0" prefWidth="200.0" spacing="300.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="returnToMainMenu" defaultButton="true" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" text="Main Menu" />
-            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="748.0" textAlignment="CENTER">
+            <Button fx:id="returnToMainMenu" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" text="Main Menu" />
+            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="748.0" styleClass="label-heading" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="27.0" />
                </font>
@@ -30,14 +30,14 @@
       </HBox>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="639.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="39.0" prefWidth="105.0" text="Step List" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" />
+            <ListView fx:id="listView" prefHeight="1000.0" />
          </children>
       </VBox>
    </left>
