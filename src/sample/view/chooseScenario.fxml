@@ -9,7 +9,10 @@
 
 <BorderPane fx:id="borderPane" styleClass="background" stylesheets="/sample/css/appStyle.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
          <center>
-            <ListView fx:id="listView" BorderPane.alignment="CENTER" />
+            <ListView fx:id="listView" maxWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin></ListView>
          </center>
    <bottom>
       <BorderPane maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
