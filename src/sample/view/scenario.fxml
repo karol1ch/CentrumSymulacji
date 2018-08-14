@@ -42,9 +42,9 @@
       </VBox>
    </left>
    <bottom>
-      <ButtonBar fx:id="buttonBar" prefHeight="250.0" prefWidth="1200.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
-         <buttons>
+      <VBox fx:id="vBox" alignment="CENTER" prefHeight="250.0" prefWidth="1200.0" spacing="20.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
+         <children>
             <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStartButtonAction" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
-         </buttons></ButtonBar>
+         </children></VBox>
    </bottom>
 </BorderPane>

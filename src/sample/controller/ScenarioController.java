@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -57,6 +58,9 @@ public class ScenarioController extends AbstractController {
     @FXML
     private BorderPane borderPane;
 
+    @FXML
+    private VBox vBox;
+
     public ScenarioController(Main mainApp) {
         super(mainApp);
     }
@@ -107,13 +111,15 @@ public class ScenarioController extends AbstractController {
             });
             return button;
         }).collect(Collectors.toList());
-        buttonBar.getButtons().removeAll(buttonBar.getButtons());
-        buttonBar.getButtons().addAll(nextStepButtons);
+       // buttonBar.getButtons().removeAll(buttonBar.getButtons());
+        //buttonBar.getButtons().addAll(nextStepButtons);
+        vBox.getChildren().removeAll(vBox.getChildren());
+        vBox.getChildren().addAll(nextStepButtons);
         setWrapping();
 
 
         if(nextStepButtons.isEmpty()){
-            //TODO
+            addToList("Koniec");
         }
     }
 

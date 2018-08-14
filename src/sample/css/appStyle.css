@@ -119,6 +119,7 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
     -fx-opacity: 0.6;
     -fx-transition: 0.5s;
+    -fx-wrap-text: true;
 }
 
 .button:hover {
