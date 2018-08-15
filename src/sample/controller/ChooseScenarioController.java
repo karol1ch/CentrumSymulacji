@@ -87,16 +87,13 @@ public class ChooseScenarioController extends AbstractController{
             }
         });
 
-        runScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
-                try {
-                    mainApp.initScenarioView();
-                } catch (IOException e) {
-                    //TODO obłsuga tego błędu
-                    e.printStackTrace();
-                }
+        runScenarioButton.setOnAction(event -> {
+            mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
+            try {
+                mainApp.initScenarioView();
+            } catch (IOException e) {
+                //TODO obłsuga tego błędu
+                e.printStackTrace();
             }
         });
 
