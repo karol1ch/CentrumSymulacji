@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -26,6 +27,7 @@ import sample.model.State;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,6 +43,8 @@ public class ScenarioController extends AbstractController {
     private Text text;
 
     ObservableList <String> items = FXCollections.observableArrayList();
+
+    //final ObservableList<String> stringsToCheckList = FXCollections.observableArrayList();
 
     @FXML
     private Button returnToMainMenu;
@@ -62,6 +66,9 @@ public class ScenarioController extends AbstractController {
     @FXML
     private VBox vBox;
 
+    @FXML
+    private VBox vBoxOnChecking;
+
     public ScenarioController(Main mainApp) {
         super(mainApp);
     }
@@ -73,9 +80,8 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private void handleStartButtonAction( ActionEvent actionEvent) throws IOException {
-        //Start apki
-        System.out.println("dziala");
         updateScenarioStateView();
+        checkList();
     }
 
 
@@ -96,6 +102,17 @@ public class ScenarioController extends AbstractController {
                 return cell;
             }
         });
+    }
+
+    private void checkList(){
+
+        List <CheckBox> checkBoxList = new ArrayList<>();
+
+        for( String string: currentScenario.getCheckListStates()) {
+            CheckBox checkBox = new CheckBox(string);
+            checkBoxList.add(checkBox);
+        }
+        vBoxOnChecking.getChildren().addAll(checkBoxList);
     }
 
 

@@ -153,3 +153,7 @@
 .list-cell {
     -fx-font-size: 13pt;
 }
+
+.check-box {
+    -fx-wrap-text: true;
+}

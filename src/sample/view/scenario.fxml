@@ -47,4 +47,15 @@
             <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStartButtonAction" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
          </children></VBox>
    </bottom>
+   <center>
+      <VBox  fx:id="vBoxOnChecking" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <Label prefHeight="39.0" prefWidth="200.0" text="Lista kontrolna" textAlignment="CENTER">
+               <font>
+                  <Font name="Cooper Black" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>

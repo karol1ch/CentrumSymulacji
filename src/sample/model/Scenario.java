@@ -14,6 +14,16 @@ public class Scenario{
         return states;
     }
 
+    private List<String> checkListStates;
+
+    public List<String> getCheckListStates() {
+        return checkListStates;
+    }
+
+    public void setCheckListStates(List<String> checkListStates) {
+        this.checkListStates = checkListStates;
+    }
+
     public void setStates(Map<Integer, State> stateArrayList) {
         this.states = stateArrayList;
     }
