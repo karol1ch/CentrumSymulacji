@@ -30,14 +30,14 @@
       </HBox>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="700.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="39.0" prefWidth="105.0" text="Step List" textAlignment="CENTER">
+            <Label prefHeight="39.0" prefWidth="200.0" text="Lista kroków" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="listView" prefHeight="1000.0" />
+            <ListView fx:id="listView" prefHeight="1000.0" prefWidth="900.0" />
          </children>
       </VBox>
    </left>

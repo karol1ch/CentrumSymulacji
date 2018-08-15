@@ -4,7 +4,7 @@ Wstrząs anafilaktyczny;
 3;Zaprzestanie podawania Pyralginy;4
 4;Położenie pacjenta na plecach;5
 5;Wołanie o pomoc;6
-6;Nagle rozwijająca się: 1. uogólniona pokrzywka, świąd z zaczerwienieniem skóry, 2. duszność, słyszalny świst wydechowy,3. HR 120/min., RR 28/min., BP 70/40 mmHg., SpO 2 88%.;7
+6;Nagle rozwijająca się: 1. uogólniona pokrzywka, świąd z zaczerwienieniem skóry, 2. duszność, słyszalny świst wydechowy, 3. HR 120/min., RR 28/min., BP 70/40 mmHg., SpO 2 88%.;7
 7;Ocena rytmu: tachykardia zatokowa;8
 8;Adrenalina: 0,5 mg i.m.;9
 9;Tlen: maska 12 l/min.;10
@@ -27,7 +27,7 @@ Wstrząs anafilaktyczny;
 26;Ocena parametrów życiowych;27 30
 27;Poprawa stanu;28
 28;Badanie ABCDE;29
-29;HR 90/min., RR 18/min., BP 110/70 mmHg., SpO 2 97%.;koniec
+29;HR 90/min., RR 18/min., BP 110/70 mmHg., SpO 2 97%.;32
 30;Brak funkcji życiowych;31
 31;HR 0/min., RR 0/min., BP nieoznaczalne.;32
-32;Koniec
+32;Koniec;

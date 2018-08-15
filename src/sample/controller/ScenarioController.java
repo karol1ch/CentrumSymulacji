@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -119,7 +120,7 @@ public class ScenarioController extends AbstractController {
 
 
         if(nextStepButtons.isEmpty()){
-            addToList("Koniec");
+            // TODO: 15.08.2018  
         }
     }
 

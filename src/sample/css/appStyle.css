@@ -114,7 +114,7 @@
     -fx-background-radius: 0;
     -fx-background-color: blue;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 11pt;
+    -fx-font-size: 13pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
     -fx-opacity: 0.6;
@@ -127,7 +127,6 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
     -fx-text-fill: #1d1d1d;
 }
 
@@ -148,4 +147,9 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
+}
+
+
+.list-cell {
+    -fx-font-size: 13pt;
 }
