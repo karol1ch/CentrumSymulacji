@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import jdk.nashorn.internal.runtime.SharedPropertyMap;
 import sample.Main;
 import sample.model.Scenario;
 import sample.model.State;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
 public class ScenarioController extends AbstractController {
@@ -42,7 +45,13 @@ public class ScenarioController extends AbstractController {
 
     private Text text;
 
+    private boolean firstLoop = false;
+
+    int progressChange;
+
     ObservableList <String> items = FXCollections.observableArrayList();
+
+    List <CheckBox> checkBoxList = new ArrayList<>();
 
     //final ObservableList<String> stringsToCheckList = FXCollections.observableArrayList();
 
@@ -69,6 +78,12 @@ public class ScenarioController extends AbstractController {
     @FXML
     private VBox vBoxOnChecking;
 
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private ProgressBar progressBar;
+
     public ScenarioController(Main mainApp) {
         super(mainApp);
     }
@@ -82,6 +97,7 @@ public class ScenarioController extends AbstractController {
     private void handleStartButtonAction( ActionEvent actionEvent) throws IOException {
         updateScenarioStateView();
         checkList();
+
     }
 
 
@@ -105,9 +121,6 @@ public class ScenarioController extends AbstractController {
     }
 
     private void checkList(){
-
-        List <CheckBox> checkBoxList = new ArrayList<>();
-
         for( String string: currentScenario.getCheckListStates()) {
             CheckBox checkBox = new CheckBox(string);
             checkBoxList.add(checkBox);
@@ -115,11 +128,29 @@ public class ScenarioController extends AbstractController {
         vBoxOnChecking.getChildren().addAll(checkBoxList);
     }
 
+    private void progress(){
+
+        progressChange = 0;
+        for( int i = 0; i < checkBoxList.size(); i++){
+            if(checkBoxList.get(i).isSelected()){
+                progressChange++;
+            }
+        }
+        double percents = (double)progressChange / (double)checkBoxList.size();
+        progressBar.setProgress(percents);
+    }
+
+
 
     private void updateScenarioStateView() {
+
+        if(firstLoop){
+            progress();
+        }
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listView.setItems(items);  // items -> stateHistoryList
         addToList(currentState.getName());
+        listView.scrollTo(items.size());
         List<Integer> children = currentState.getChildren();
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());
@@ -129,16 +160,18 @@ public class ScenarioController extends AbstractController {
             });
             return button;
         }).collect(Collectors.toList());
-       // buttonBar.getButtons().removeAll(buttonBar.getButtons());
-        //buttonBar.getButtons().addAll(nextStepButtons);
         vBox.getChildren().removeAll(vBox.getChildren());
         vBox.getChildren().addAll(nextStepButtons);
         setWrapping();
 
 
+
+
+
         if(nextStepButtons.isEmpty()){
             // TODO: 15.08.2018  
         }
+        firstLoop = true;
     }
 
     public void addToList(String string){
@@ -151,6 +184,8 @@ public class ScenarioController extends AbstractController {
         currentScenario = mainApp.getAppState().getScenarioToShow();
         scenarioName.setText(currentScenario.getName());
         currentState = currentScenario.getIniialState();
+        scrollPane.setFitToWidth(true);
+
 
     }
 

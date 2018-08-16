@@ -152,8 +152,37 @@
 
 .list-cell {
     -fx-font-size: 13pt;
+    -fx-wrap-text: true;
 }
 
+
 .check-box {
+    -fx-pref-width: 400;
     -fx-wrap-text: true;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: lightskyblue;
+}
+
+.scroll-pane {
+    -fx-wrap-text: true;
+    -fx-pref-width: 35%;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-padding:-7;
 }
