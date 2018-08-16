@@ -186,3 +186,7 @@
     -fx-opacity: 0;
     -fx-padding:-7;
 }
+
+.progress-bar .bar {
+    -fx-background-color: lightskyblue;
+}

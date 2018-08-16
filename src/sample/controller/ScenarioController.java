@@ -1,6 +1,13 @@
 package sample.controller;
 
+import com.sun.deploy.util.StringUtils;
 import com.sun.xml.internal.bind.v2.TODO;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import jdk.nashorn.internal.runtime.SharedPropertyMap;
 import sample.Main;
 import sample.model.Scenario;
@@ -29,10 +37,8 @@ import sample.model.State;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
@@ -40,20 +46,17 @@ public class ScenarioController extends AbstractController {
 
     private Scenario currentScenario;
     private State currentState;
-
-    private int iterator = 0;
-
-    private Text text;
-
     private boolean firstLoop = false;
+    private int progressChange;
 
-    int progressChange;
+    private static final Integer STARTTIME = 0;
+    private Timeline timeline;
+    private Integer timeSeconds = STARTTIME;
+
 
     ObservableList <String> items = FXCollections.observableArrayList();
 
     List <CheckBox> checkBoxList = new ArrayList<>();
-
-    //final ObservableList<String> stringsToCheckList = FXCollections.observableArrayList();
 
     @FXML
     private Button returnToMainMenu;
@@ -83,6 +86,15 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private ProgressBar progressBar;
+
+    @FXML
+    private Label percentsValue;
+
+    @FXML
+    private Label timeLabel;
+
+    @FXML
+    private VBox vBoxRight;
 
     public ScenarioController(Main mainApp) {
         super(mainApp);
@@ -138,8 +150,43 @@ public class ScenarioController extends AbstractController {
         }
         double percents = (double)progressChange / (double)checkBoxList.size();
         progressBar.setProgress(percents);
+        percents*=100;
+        percentsValue.setText(Integer.toString((int)percents) + " % ");
+
     }
 
+    private void bindToTime(){
+        timeLabel.setText(timeSeconds.toString());
+        Button button = new Button();
+        button.setText("Start Timer");
+        //Button event handler
+        button.setOnAction(event -> {
+            if (timeline != null) {
+                timeline.stop();
+            }
+            timeSeconds = STARTTIME;
+            timeLabel.setText(timeSeconds.toString());
+            timeline = new Timeline();
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.seconds(1),
+                            event1 -> {
+                                timeSeconds++;
+                                timeLabel.setText(
+                                        timeSeconds.toString());
+                                if (timeSeconds <= 0) {
+                                    timeline.stop();
+                                }
+                            }));
+            timeline.playFromStart();
+        });
+
+
+
+
+        vBoxRight.getChildren().addAll(button);
+
+    }
 
 
     private void updateScenarioStateView() {
@@ -178,9 +225,9 @@ public class ScenarioController extends AbstractController {
         items.add(string);
     }
 
-
     @Override
     public void initialize (URL location, ResourceBundle resources) {
+        bindToTime();
         currentScenario = mainApp.getAppState().getScenarioToShow();
         scenarioName.setText(currentScenario.getName());
         currentState = currentScenario.getIniialState();

@@ -34,7 +34,7 @@
    <left>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefWidth="500" spacing="10" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="39.0" prefWidth="200.0" text="Lista kroków" textAlignment="CENTER">
+            <Label prefHeight="39.0" prefWidth="200.0" text="Lista kroków:" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
@@ -54,7 +54,7 @@
          <content>
             <VBox fx:id="vBoxOnChecking" alignment="TOP_LEFT" prefHeight="2000" prefWidth="Infinity" spacing="10.0">
                <children>
-                  <Label prefHeight="39.0" prefWidth="200.0" text="Lista kontrolna" textAlignment="CENTER">
+                  <Label prefHeight="39.0" prefWidth="200.0" text="Lista kontrolna:" textAlignment="CENTER">
                      <font>
                         <Font name="Cooper Black" size="18.0" />
                      </font>
@@ -70,12 +70,15 @@
    <right>
       <VBox fx:id="vBoxRight" alignment="TOP_LEFT" prefWidth="300.0" spacing="20" BorderPane.alignment="TOP_LEFT">
          <children>
-            <Label prefHeight="39.0" prefWidth="200.0" text="Pasek postępów" textAlignment="CENTER">
+            <Label prefHeight="39.0" prefWidth="200.0" text="Pasek postępów:" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
             </Label>
-            <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar" prefHeight="50.0" prefWidth="250.0" progress="0.0" />
+            <Label fx:id="percentsValue" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="250.0" />
+            <Label prefHeight="39.0" prefWidth="200.0" text="Czas:" textAlignment="CENTER" />
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="250.0" />
          </children>
           <padding>
               <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
