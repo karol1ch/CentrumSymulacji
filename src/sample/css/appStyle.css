@@ -7,6 +7,7 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: black;
     -fx-opacity: 0.6;
+    -fx-wrap-text: true;
 }
 
 .label-heading {

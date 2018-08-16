@@ -48,10 +48,12 @@ public class ScenarioController extends AbstractController {
     private State currentState;
     private boolean firstLoop = false;
     private int progressChange;
+    private int secondsSum;
 
     private static final Integer STARTTIME = 0;
     private Timeline timeline;
     private Integer timeSeconds = STARTTIME;
+    private int minute;
 
 
     ObservableList <String> items = FXCollections.observableArrayList();
@@ -109,7 +111,9 @@ public class ScenarioController extends AbstractController {
     private void handleStartButtonAction( ActionEvent actionEvent) throws IOException {
         updateScenarioStateView();
         checkList();
-
+        secondsSum = 0;
+        minute = 0;
+        stopWatch();
     }
 
 
@@ -155,38 +159,29 @@ public class ScenarioController extends AbstractController {
 
     }
 
-    private void bindToTime(){
-        timeLabel.setText(timeSeconds.toString());
-        Button button = new Button();
-        button.setText("Start Timer");
-        //Button event handler
-        button.setOnAction(event -> {
-            if (timeline != null) {
-                timeline.stop();
-            }
-            timeSeconds = STARTTIME;
-            timeLabel.setText(timeSeconds.toString());
-            timeline = new Timeline();
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.getKeyFrames().add(
-                    new KeyFrame(Duration.seconds(1),
-                            event1 -> {
-                                timeSeconds++;
-                                timeLabel.setText(
-                                        timeSeconds.toString());
-                                if (timeSeconds <= 0) {
-                                    timeline.stop();
-                                }
-                            }));
-            timeline.playFromStart();
-        });
-
-
-
-
-        vBoxRight.getChildren().addAll(button);
-
+    private void stopWatch(){
+        if (timeline != null) {
+            secondsSum += minute * 60 + timeSeconds;
+            minute = 0;
+            timeline.stop();
+        }
+        timeSeconds = STARTTIME;
+        timeLabel.setText(minute +" min  "+timeSeconds.toString()+" s");
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(1),
+                        event1 -> {
+                            timeSeconds++;
+                            timeLabel.setText(minute + " min  " + timeSeconds.toString() + " s");
+                            if(timeSeconds == 59){
+                                minute++;
+                                timeSeconds = 0;
+                            }
+                        }));
+        timeline.playFromStart();
     }
+
 
 
     private void updateScenarioStateView() {
@@ -202,6 +197,7 @@ public class ScenarioController extends AbstractController {
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());
             button.setOnAction((e)->{
+                stopWatch();
                 currentState = s;
                 updateScenarioStateView();
             });
@@ -211,12 +207,13 @@ public class ScenarioController extends AbstractController {
         vBox.getChildren().addAll(nextStepButtons);
         setWrapping();
 
-
-
-
-
         if(nextStepButtons.isEmpty()){
-            // TODO: 15.08.2018  
+            timeline.stop();
+            minute = secondsSum / 60;
+            secondsSum = secondsSum % 60;
+            timeLabel.setText(minute + " minut  " + secondsSum + " sekund");
+            //TODO
+
         }
         firstLoop = true;
     }
@@ -227,7 +224,6 @@ public class ScenarioController extends AbstractController {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-        bindToTime();
         currentScenario = mainApp.getAppState().getScenarioToShow();
         scenarioName.setText(currentScenario.getName());
         currentState = currentScenario.getIniialState();
