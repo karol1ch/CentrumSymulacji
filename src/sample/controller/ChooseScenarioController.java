@@ -8,9 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import sample.Main;
 import sample.model.Scenario;
@@ -34,6 +36,9 @@ public class ChooseScenarioController extends AbstractController{
     @FXML
     private Button newScenarioButton;
 
+    @FXML
+    private GridPane gridPane;
+
     public ChooseScenarioController(Main mainApp) {
         super(mainApp);
     }
@@ -42,7 +47,6 @@ public class ChooseScenarioController extends AbstractController{
     public void initialize(URL location, ResourceBundle resources) {
         mainApp.loadAllScenarios();
         List<Scenario> allScenarios = mainApp.getAppState().getAllScenarios();
-
         if(allScenarios != null){
             ObservableList listViewData = FXCollections.observableArrayList(allScenarios);
             listView.setItems(listViewData);
@@ -83,24 +87,24 @@ public class ChooseScenarioController extends AbstractController{
             }
         });
 
-        runScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
-                try {
-                    mainApp.initScenarioView();
-                } catch (IOException e) {
-                    //TODO obłsuga tego błędu
-                    e.printStackTrace();
-                }
+        runScenarioButton.setOnAction(event -> {
+            mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
+            try {
+                mainApp.initScenarioView();
+            } catch (IOException e) {
+                //TODO obłsuga tego błędu
+                e.printStackTrace();
             }
         });
 
-        editScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("edytuje"); //TODO
+        editScenarioButton.setOnAction(event -> {
+            mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
+            try {
+                mainApp.initChangeScenarioView();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            System.out.println("edytuje");
         });
 
         newScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -110,6 +114,7 @@ public class ChooseScenarioController extends AbstractController{
 
             }
         });
+
 
     }
 

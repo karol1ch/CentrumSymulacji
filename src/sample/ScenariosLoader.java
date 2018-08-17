@@ -23,12 +23,19 @@ public class ScenariosLoader {
 
     private Scenario readScenarioFromFile(File file) {
         BufferedReader reader = null;
+        List<String> checkListStates = new LinkedList<>();
         Map <Integer,State> states = new HashMap<>();
         try {
             Scenario scenario = new Scenario();
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             String description = reader.readLine();
             ArrayList<String> components = new ArrayList<>(Arrays.asList(description.split(";")));
+            description = reader.readLine();
+            String[] checkDescription = description.split(";");
+            for ( int i = 0; i < checkDescription.length; i++) {
+                checkListStates.add(checkDescription[i]);
+            }
+            scenario.setCheckListStates(checkListStates);
             while(true){
                 State state = new State();
                 description = reader.readLine();
@@ -47,7 +54,7 @@ public class ScenariosLoader {
                     states.put(state.getNumber(),state);
                 }
                 else if (stateDescription.length == 2){
-                    state.setChildren(null);
+                    state.setChildren(Collections.emptyList());
                     states.put(state.getNumber(),state);
                     break;
                 }

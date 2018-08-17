@@ -1,5 +1,7 @@
 package sample.model;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Scenario{
@@ -10,6 +12,16 @@ public class Scenario{
 
     public Map<Integer,State> getStates() {
         return states;
+    }
+
+    private List<String> checkListStates;
+
+    public List<String> getCheckListStates() {
+        return checkListStates;
+    }
+
+    public void setCheckListStates(List<String> checkListStates) {
+        this.checkListStates = checkListStates;
     }
 
     public void setStates(Map<Integer, State> stateArrayList) {
@@ -24,7 +36,12 @@ public class Scenario{
         this.name = name;
     }
 
-    public State getInitialState() {
-        return states.get(1);
+    public State getIniialState() {
+        State state = new State();
+        state.setNumber(-1);
+        state.setName("");
+        state.setChildren(Collections.singletonList(1));
+        return state;
     }
+
 }

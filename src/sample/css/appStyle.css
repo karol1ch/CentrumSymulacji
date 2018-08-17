@@ -1,25 +1,35 @@
 .background {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: lightskyblue;
 }
 
 .label {
-    -fx-font-size: 11pt;
+    -fx-font-size: 16pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 0.6;
+    -fx-wrap-text: true;
 }
+
+.label-heading {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-opacity: 0.6;
+
+}
+
 
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: pink;
     -fx-opacity: 1;
 }
 
@@ -101,35 +111,33 @@
 .button {
     -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;
-    -fx-border-width: 2;
+    -fx-border-width: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
+    -fx-background-color: blue;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-opacity: 0.6;
+    -fx-transition: 0.5s;
+    -fx-wrap-text: true;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-opacity: 1;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
     -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
     -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
 }
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: gray;
     -fx-text-fill: white;
 }
 
@@ -140,4 +148,46 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
+}
+
+
+.list-cell {
+    -fx-font-size: 13pt;
+    -fx-wrap-text: true;
+}
+
+
+.check-box {
+    -fx-pref-width: 400;
+    -fx-wrap-text: true;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: lightskyblue;
+}
+
+.scroll-pane {
+    -fx-wrap-text: true;
+    -fx-pref-width: 35%;
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+}
+
+.progress-bar .bar {
+    -fx-background-color: lightskyblue;
 }
