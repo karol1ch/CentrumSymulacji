@@ -1,6 +1,7 @@
 package sample.controller;
 
 import com.sun.xml.internal.bind.v2.TODO;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -8,18 +9,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import javafx.util.Pair;
 import sample.Main;
 import sample.model.Scenario;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ChooseScenarioController extends AbstractController{
@@ -41,6 +45,50 @@ public class ChooseScenarioController extends AbstractController{
 
     public ChooseScenarioController(Main mainApp) {
         super(mainApp);
+    }
+
+
+    private boolean checkAccess(){
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Login");
+        dialog.setHeaderText("Zaloguj się aby uzyskać dostęp");
+        ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField username = new TextField();
+        PasswordField password = new PasswordField();
+
+        grid.add(new Label("Username:"), 0, 0);
+        grid.add(username, 1, 0);
+        grid.add(new Label("Password:"), 0, 1);
+        grid.add(password, 1, 1);
+
+        Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
+        loginButton.setDisable(true);
+
+        username.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(() -> username.requestFocus());
+
+        dialog.showAndWait();
+
+        if(String.valueOf(username.getText()).equals("admin") && String.valueOf(password.getText()).equals("admin")){
+            return true;
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Błędny login lub hasło.");
+            alert.showAndWait();
+            return false;
+        }
     }
 
     @Override
@@ -100,19 +148,25 @@ public class ChooseScenarioController extends AbstractController{
         editScenarioButton.setOnAction(event -> {
             mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
             try {
-                mainApp.initChangeScenarioView();
+                if(checkAccess()) {
+                    mainApp.initChangeScenarioView();
+                }
+                else{
+                    System.out.println("nie dziala");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("edytuje");
         });
 
-        newScenarioButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("dodaje");  //TODO
-
+        newScenarioButton.setOnAction(event -> {
+            if(checkAccess()){
+                System.out.println("dziala");
             }
+            else{
+                System.out.println("nie dziala");
+            }
+
         });
 
 
