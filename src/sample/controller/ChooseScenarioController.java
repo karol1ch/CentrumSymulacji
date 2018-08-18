@@ -86,7 +86,15 @@ public class ChooseScenarioController extends AbstractController{
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Błędny login lub hasło.");
-            alert.showAndWait();
+
+            ButtonType button = new ButtonType("Ponów próbę");
+            alert.getButtonTypes().clear();
+            //alert.getButtonTypes().add(button);
+            alert.getButtonTypes().addAll(button, new ButtonType("Zamknij", ButtonBar.ButtonData.CANCEL_CLOSE));
+            Optional<ButtonType> option = alert.showAndWait();
+            if(option.get() == button){
+                checkAccess();
+            }
             return false;
         }
     }
