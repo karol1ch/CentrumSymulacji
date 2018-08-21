@@ -6,9 +6,15 @@ public class State {
 
     private int number;
 
+    private String description;
+
     private List<Integer> children;
 
     private String name;
+
+    public State (){
+        this.description = "";
+    }
 
     public int getNumber() {
         return number;
@@ -34,5 +40,11 @@ public class State {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

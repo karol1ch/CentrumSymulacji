@@ -98,6 +98,12 @@ public class ScenarioController extends AbstractController {
     @FXML
     private VBox vBoxRight;
 
+    @FXML
+    private Button descriptionButton;
+
+    @FXML
+    private TextArea messageField;
+
     public ScenarioController(Main mainApp) {
         super(mainApp);
     }
@@ -116,6 +122,14 @@ public class ScenarioController extends AbstractController {
         stopWatch();
     }
 
+    private void openFile(){
+
+        try {
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "F:\\Intelij Idea\\CentrumSymulacji\\OpisyScenariuszy\\ScenariuszDrugi.docx");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void setWrapping(){
         listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -155,7 +169,6 @@ public class ScenarioController extends AbstractController {
         double percents = (double)progressChange / (double)checkBoxList.size();
         progressBar.setProgress(percents);
         percents*=100;
-        percentsValue.setText(Integer.toString((int)percents) + " % ");
 
     }
 
@@ -188,6 +201,13 @@ public class ScenarioController extends AbstractController {
 
         if(firstLoop){
             progress();
+        }
+        if(currentState.getDescription().equals("")){
+            messageField.setVisible(false);
+        }
+        else{
+            messageField.setText("dupa");
+            messageField.setVisible(true);
         }
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listView.setItems(items);  // items -> stateHistoryList
@@ -228,8 +248,10 @@ public class ScenarioController extends AbstractController {
         scenarioName.setText(currentScenario.getName());
         currentState = currentScenario.getIniialState();
         scrollPane.setFitToWidth(true);
-
-
+        messageField.setVisible(false);
+        descriptionButton.setOnAction(event -> {
+            openFile();
+        });
     }
 
 
