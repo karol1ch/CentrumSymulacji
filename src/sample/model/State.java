@@ -4,7 +4,7 @@ import java.util.List;
 
 public class State {
 
-    private int number;
+    private Integer number;
 
     private String description;
 
@@ -16,11 +16,17 @@ public class State {
         this.description = "";
     }
 
-    public int getNumber() {
+    public State(Integer number, String name, List<Integer> children) {
+        this.number = number;
+        this.name = name;
+        this.children = children;
+    }
+
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

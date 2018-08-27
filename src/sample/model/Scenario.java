@@ -1,11 +1,13 @@
 package sample.model;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Scenario{
+    public static final String FIRST_STATE_NAME = "START";
+    public static final String LAST_STATE_NAME = "KONIEC";
 
+
+    //TODO konstruktor z prawdziwego zdarzenia (zawierający wymagane pola)
     private String name;
 
     private Map<Integer,State> states;
@@ -20,7 +22,7 @@ public class Scenario{
         return checkListStates;
     }
 
-    public void setCheckListStates(List<String> checkListStates) {
+    public void setChecklist(List<String> checkListStates) {
         this.checkListStates = checkListStates;
     }
 
@@ -36,12 +38,25 @@ public class Scenario{
         this.name = name;
     }
 
-    public State getIniialState() {
-        State state = new State();
-        state.setNumber(-1);
-        state.setName("");
-        state.setChildren(Collections.singletonList(1));
-        return state;
+    public State getInitialState() throws Exception {
+        //TODO sprawdzenie, że powinien być dokładnie jeden stan START (nie więcej)
+        return states.values().stream()
+                .filter(s -> FIRST_STATE_NAME.equals(s.getName()))
+                .findAny()
+                .orElseThrow(() -> new Exception("Brak stanu o nazwie 'START'"));
+    }
+
+    public static Scenario createEmptyScenario(){
+        Scenario scenario = new Scenario();
+        Map<Integer,State> states = new HashMap<>();
+        State endState = new State(999,LAST_STATE_NAME,Collections.emptyList());
+        State startState = new State(0,FIRST_STATE_NAME, Arrays.asList(endState.getNumber()));
+        states.put(startState.getNumber(),startState);
+        states.put(endState.getNumber(),endState);
+        scenario.setStates(states);
+        scenario.setName("Nowy scenariusz");
+        scenario.setChecklist(new LinkedList<>());
+        return scenario;
     }
 
 }

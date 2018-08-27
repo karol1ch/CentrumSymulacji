@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import sample.controller.*;
 import sample.model.AppState;
 import sample.model.Scenario;
+import sample.utils.ScenariosLoader;
 
 
 import java.io.*;
