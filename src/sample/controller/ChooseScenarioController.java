@@ -133,12 +133,10 @@ public class ChooseScenarioController extends AbstractController{
                 if(newValue != null){
                     runScenarioButton.setDisable(false);
                     editScenarioButton.setDisable(false);
-                    newScenarioButton.setDisable(false);
 
                 }else{
                     runScenarioButton.setDisable(true);
                     editScenarioButton.setDisable(true);
-                    newScenarioButton.setDisable(true);
                 }
             }
         });
@@ -154,6 +152,7 @@ public class ChooseScenarioController extends AbstractController{
         });
 
         editScenarioButton.setOnAction(event -> {
+            //TODO dlaczego scenarioToShow... Nie używajmy jednej zmiennej w wielu kontekstach.
             mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
             try {
                 if(checkAccess()) {
@@ -168,11 +167,18 @@ public class ChooseScenarioController extends AbstractController{
         });
 
         newScenarioButton.setOnAction(event -> {
-            if(checkAccess()){
-                System.out.println("dziala");
-            }
-            else{
-                System.out.println("nie dziala");
+            //TODO dlaczego scenarioToShow... Nie używajmy jednej zmiennej w wielu kontekstach.
+            //TODO2 edit i new to to samo...
+            mainApp.getAppState().setScenarioToShow(null);
+            try {
+                if(checkAccess()) {
+                    mainApp.initChangeScenarioView();
+                }
+                else{
+                    System.out.println("nie dziala");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         });

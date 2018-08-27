@@ -38,7 +38,11 @@ public class EditScenarioController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         currentScenario = mainApp.getAppState().getScenarioToShow();
-        scenarioName.setText(currentScenario.getName());
+        Scenario scenarioToEdit = currentScenario;
+        if (scenarioToEdit== null){
+            scenarioToEdit = createEmptyScenario();
+        }
+        scenarioName.setText(scenarioToEdit.getName());
 
         returnToMainMenu.setOnAction(event -> {
             try {
@@ -52,10 +56,7 @@ public class EditScenarioController extends AbstractController {
         centerPane.getChildren().add(swingNode);
         centerPane.setPrefWidth(1024);
         centerPane.setPrefHeight(768);
-        Scenario scenarioToEdit = currentScenario;
-        if (scenarioToEdit== null){
-            scenarioToEdit = createEmptyScenario();
-        }
+
         mxGraph graph = ScenarioGraphConverter.scenarioToGraph(scenarioToEdit);
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         swingNode.setContent(graphComponent);

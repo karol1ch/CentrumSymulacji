@@ -30,7 +30,7 @@
 
          </center>
          <right>
-                   <Button fx:id="newScenarioButton" disable="true" mnemonicParsing="false" prefHeight="26.0"  text="Dodaj scenariusz" BorderPane.alignment="CENTER">
+                   <Button fx:id="newScenarioButton" mnemonicParsing="false" prefHeight="26.0"  text="Dodaj scenariusz" BorderPane.alignment="CENTER">
                <padding>
                   <Insets right="20.0" />
                </padding>
