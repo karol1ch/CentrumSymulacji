@@ -1,18 +1,21 @@
 package sample.controller;
 
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxRectangle;
+import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.util.*;
 import com.mxgraph.view.mxGraph;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import sample.Main;
+import sample.editor.GraphEditor;
 import sample.model.Scenario;
 import sample.utils.ScenarioGraphConverter;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,16 +54,29 @@ public class EditScenarioController extends AbstractController {
                 e.printStackTrace();
             }
         } );
-        SwingNode swingNode = new SwingNode();
-
-        centerPane.getChildren().add(swingNode);
+        SwingNode graphSwingNode = new SwingNode();
+        centerPane.getChildren().add(graphSwingNode);
         centerPane.setPrefWidth(1024);
         centerPane.setPrefHeight(768);
 
         mxGraph graph = ScenarioGraphConverter.scenarioToGraph(scenarioToEdit);
-        mxGraphComponent graphComponent = new mxGraphComponent(graph);
-        swingNode.setContent(graphComponent);
+        graph.setAllowDanglingEdges(false);
 
+        mxGraphComponent graphComponent = new mxGraphComponent(graph);
+
+        GraphEditor editorFrame = initEditor(graphComponent);
+
+        //graphSwingNode.setContent(graphComponent);
+        graphSwingNode.setContent(editorFrame);
+    }
+
+    private GraphEditor initEditor(mxGraphComponent graphComponent) {
+
+        mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
+        mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
+
+        GraphEditor editor = new GraphEditor("something",graphComponent);
+        return editor;
     }
 
     private Scenario createEmptyScenario() {
