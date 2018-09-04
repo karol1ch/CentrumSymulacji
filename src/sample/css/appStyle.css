@@ -112,7 +112,7 @@
     -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;
     -fx-border-width: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 30;
     -fx-background-color: blue;
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 13pt;
@@ -190,4 +190,8 @@
 
 .progress-bar .bar {
     -fx-background-color: lightskyblue;
+}
+
+.text-area {
+    -fx-font-family: "Segoe UI Semibold";
 }

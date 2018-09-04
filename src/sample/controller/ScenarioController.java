@@ -148,6 +148,7 @@ public class ScenarioController extends AbstractController {
         double percents = (double)progressChange / (double)checkBoxList.size();
         progressBar.setProgress(percents);
         percents*=100;
+        percentsValue.setText(Integer.toString((int)percents) + " % ");
 
     }
 
