@@ -39,7 +39,6 @@ public class ScenariosLoader {
             String stateEncoded;
             while((stateEncoded = reader.readLine())!=null){
                 String[] stateParams = stateEncoded.split(";");
-
                 Integer stateNumber = Integer.parseInt(stateParams[0]);
                 String stateName =   stateParams[1];
                 List<Integer> children = new LinkedList<>();
@@ -47,8 +46,11 @@ public class ScenariosLoader {
                     children=Stream.of(stateParams[2].split(" ")).map(Integer::valueOf).collect(Collectors.toList());
 
                 }
-
-                State state = new State(stateNumber,stateName,children);
+                String description = "";
+                if(stateParams.length == 4) {
+                    description = stateParams[3];
+                }
+                State state = new State(stateNumber, stateName, children, description);
 
                 states.put(state.getNumber(),state);
             }

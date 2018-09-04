@@ -49,8 +49,8 @@ public class Scenario{
     public static Scenario createEmptyScenario(){
         Scenario scenario = new Scenario();
         Map<Integer,State> states = new HashMap<>();
-        State endState = new State(999,LAST_STATE_NAME,Collections.emptyList());
-        State startState = new State(0,FIRST_STATE_NAME, Arrays.asList(endState.getNumber()));
+        State endState = new State(999,LAST_STATE_NAME,Collections.emptyList(),"");
+        State startState = new State(0,FIRST_STATE_NAME, Arrays.asList(endState.getNumber()),"");
         states.put(startState.getNumber(),startState);
         states.put(endState.getNumber(),endState);
         scenario.setStates(states);

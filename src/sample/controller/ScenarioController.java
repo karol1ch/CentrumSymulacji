@@ -174,6 +174,15 @@ public class ScenarioController extends AbstractController {
         timeline.playFromStart();
     }
 
+    private void setMessageField(){
+        if("".equals(currentState.getDescription())){
+            messageField.setVisible(false);
+        }
+        else{
+            messageField.setText(currentState.getDescription());
+            messageField.setVisible(true);
+        }
+    }
 
 
     private void updateScenarioStateView() {
@@ -181,13 +190,7 @@ public class ScenarioController extends AbstractController {
         if(firstLoop){
             progress();
         }
-        if("".equals(currentState.getDescription())){
-            messageField.setVisible(false);
-        }
-        else{
-            messageField.setText("dupa");
-            messageField.setVisible(true);
-        }
+        setMessageField();
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listView.setItems(items);  // items -> stateHistoryList
         addToList(currentState.getName());

@@ -16,10 +16,11 @@ public class State {
         this.description = "";
     }
 
-    public State(Integer number, String name, List<Integer> children) {
+    public State(Integer number, String name, List<Integer> children, String description) {
         this.number = number;
         this.name = name;
         this.children = children;
+        this.description = description;
     }
 
     public Integer getNumber() {
