@@ -104,7 +104,7 @@ public class ScenarioController extends AbstractController {
     private void openFile(){
 
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "F:\\Intelij Idea\\CentrumSymulacji\\OpisyScenariuszy\\ScenariuszDrugi.docx");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "OpisyScenariuszy" + File.separator + currentScenario.getName()+".docx");
         } catch (IOException e) {
             e.printStackTrace();
         }

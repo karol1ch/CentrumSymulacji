@@ -311,6 +311,9 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	 * (non-Javadoc)
 	 * @see java.awt.dnd.DropTargetListener#dragOver(java.awt.dnd.DropTargetDragEvent)
 	 */
+
+
+
 	public void dragOver(final DropTargetDragEvent arg0)
 	{
 		updateMousePosition(arg0.getLocation());
