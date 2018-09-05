@@ -2,12 +2,18 @@ package sample.utils;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxICell;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import sample.model.Scenario;
+import sample.model.State;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ScenarioGraphConverter {
     public static mxGraph scenarioToGraph(Scenario scenario) {
@@ -18,7 +24,7 @@ public class ScenarioGraphConverter {
         graph.getModel().beginUpdate();
         try
         {
-            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, s.getNumber().toString(), s.getName(), 280, 320, 80,
+            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, s.getNumber().toString(), s, 280, 320, 80,
                     30)));
             scenario.getStates().values().stream().forEach(s -> {
                 s.getChildren()
@@ -35,5 +41,27 @@ public class ScenarioGraphConverter {
             graph.getModel().endUpdate();
         }
         return graph;
+    }
+
+    public static Scenario graphToScenario(mxGraph graph){
+        Scenario newScenario = new Scenario();
+        Object[] childCells = graph.getChildVertices(graph.getDefaultParent());
+        for (Object childCell : childCells) {
+            mxCell cell = (mxCell)childCell;
+           State state = (State)cell.getValue();
+            int edgeCount = cell.getEdgeCount();
+            List<Integer> children = new ArrayList<>();
+            for(int i = 0;i< edgeCount;i++){
+                mxCell edge = (mxCell)cell.getEdgeAt(i);
+                if(edge.getSource() == cell){
+                    State childState = (State) edge.getTarget().getValue();
+                    children.add(childState.getNumber());
+                }
+            }
+            newScenario.getStates().put(state.getNumber(),new State(state.getNumber(),state.getName(),children,"some description"));
+
+        }
+        return newScenario;
+
     }
 }
