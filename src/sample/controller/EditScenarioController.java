@@ -28,11 +28,15 @@ public class EditScenarioController extends AbstractController {
     private Button returnToMainMenu;
 
     @FXML
+    private Button saveButton;
+
+    @FXML
     private Label scenarioName;
 
     @FXML
     private AnchorPane centerPane;
 
+    private mxGraph graph;
 
     public EditScenarioController(Main mainApp) {
         super(mainApp);
@@ -54,20 +58,34 @@ public class EditScenarioController extends AbstractController {
                 e.printStackTrace();
             }
         } );
+
+        saveButton.setOnAction(event -> {
+
+            Scenario scenarioToSave = ScenarioGraphConverter.graphToScenario(graph);
+            scenarioToSave.setName("New scenario");
+
+        } );
+
         SwingNode graphSwingNode = new SwingNode();
         centerPane.getChildren().add(graphSwingNode);
         centerPane.setPrefWidth(1024);
         centerPane.setPrefHeight(768);
 
-        mxGraph graph = ScenarioGraphConverter.scenarioToGraph(scenarioToEdit);
-        graph.setAllowDanglingEdges(false);
+        graph = ScenarioGraphConverter.scenarioToGraph(scenarioToEdit);
 
-        mxGraphComponent graphComponent = new mxGraphComponent(graph);
 
-        GraphEditor editorFrame = initEditor(graphComponent);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                graph.setAllowDanglingEdges(false);
+
+                mxGraphComponent graphComponent = new mxGraphComponent(graph);
+                graphSwingNode.setContent(initEditor(graphComponent));
+            }
+        });
 
         //graphSwingNode.setContent(graphComponent);
-        graphSwingNode.setContent(editorFrame);
+        //graphSwingNode.setContent(editorFrame);
     }
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {

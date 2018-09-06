@@ -13,6 +13,7 @@
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="100.0" styleClass="background" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="returnToMainMenu" mnemonicParsing="false" prefHeight="29.0" prefWidth="163.0" text="Main Menu" />
+            <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
                 <Button fx:id="setDesc" mnemonicParsing="false" prefHeight="29.0" prefWidth="163.0" text="Set Description" />
                 <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="748.0" styleClass="label-heading" textAlignment="CENTER">
                     <font>

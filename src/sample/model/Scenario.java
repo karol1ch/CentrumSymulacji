@@ -6,6 +6,11 @@ public class Scenario{
     public static final String FIRST_STATE_NAME = "START";
     public static final String LAST_STATE_NAME = "KONIEC";
 
+    public Scenario() {
+        states = new HashMap<>();
+        checkListStates = new ArrayList<>();
+    }
+
 
     //TODO konstruktor z prawdziwego zdarzenia (zawierający wymagane pola)
     private String name;
