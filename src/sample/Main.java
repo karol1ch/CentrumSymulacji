@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import sample.controller.*;
 import sample.model.AppState;
 import sample.model.Scenario;
-import sample.utils.ScenariosLoader;
+import sample.utils.ScenariosReaderWriter;
 
 
 import java.io.*;
@@ -69,9 +69,9 @@ public class Main extends Application {
     }
 
     public void loadAllScenarios() {
-        ScenariosLoader scenariosLoader= new ScenariosLoader();
+        ScenariosReaderWriter scenariosReaderWriter = new ScenariosReaderWriter();
         try {
-            List<Scenario> scenarios = scenariosLoader.loadScenarios("Scenariusze");
+            List<Scenario> scenarios = scenariosReaderWriter.loadScenarios("Scenariusze");
             if(scenarios.size() > 0) {
                 appState.setAllScenarios(scenarios);
             }else{

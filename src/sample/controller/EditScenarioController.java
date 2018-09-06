@@ -13,11 +13,14 @@ import sample.Main;
 import sample.editor.GraphEditor;
 import sample.model.Scenario;
 import sample.utils.ScenarioGraphConverter;
+import sample.utils.ScenariosReaderWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class EditScenarioController extends AbstractController {
@@ -63,6 +66,8 @@ public class EditScenarioController extends AbstractController {
 
             Scenario scenarioToSave = ScenarioGraphConverter.graphToScenario(graph);
             scenarioToSave.setName("New scenario");
+            ScenariosReaderWriter scenarioReaderWriter = new ScenariosReaderWriter();
+            scenarioReaderWriter.serializeScenario(scenarioToSave, Paths.get("Scenariusze","default.format").toString());
 
         } );
 

@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static sample.model.Scenario.LAST_STATE_NAME;
 
-public class ScenariosLoader {
+public class ScenariosReaderWriter {
 
 
     public List<Scenario> loadScenarios(String pathname) throws IOException {
@@ -21,7 +21,7 @@ public class ScenariosLoader {
                 //.filter(path -> path.endsWith("txt"))
                 .map(Path::toFile)
                 .filter(File::isFile)
-                .map(this::readScenarioFromFile)
+                .map(file -> file.getPath().endsWith("format")?deserializeScenario(file):readScenarioFromFile(file))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
@@ -64,5 +64,32 @@ public class ScenariosLoader {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public Scenario deserializeScenario(File file){
+        try (ObjectInputStream ois =
+                     new ObjectInputStream(new FileInputStream(file))) {
+
+            Scenario scenario = (Scenario) ois.readObject();
+            System.out.println("Done");
+            return scenario;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public void serializeScenario(Scenario scenario, String filePath) {
+        try (ObjectOutputStream oos =
+                     new ObjectOutputStream(new FileOutputStream(filePath))) {
+
+            oos.writeObject(scenario);
+            System.out.println("Done");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 }

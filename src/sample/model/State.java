@@ -1,8 +1,10 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class State {
+public class State implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Integer number;
 

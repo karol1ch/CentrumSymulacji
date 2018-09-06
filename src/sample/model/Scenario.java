@@ -1,8 +1,12 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Scenario{
+public class Scenario implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
     public static final String FIRST_STATE_NAME = "START";
     public static final String LAST_STATE_NAME = "KONIEC";
 
