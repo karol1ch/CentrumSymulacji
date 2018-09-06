@@ -4,7 +4,7 @@ Ocena funkcji życiowych poszkodowanego.;Prawidłowe przygotowanie i podanie lek
 1;A;2;
 2;B;3;opis 1
 3;C;4 5;opis 2
-4;D;6;
+4;D;6;opis jakiś
 5;Esssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;7;
 6;Fdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss;7;
 7;G;8;opis 3
