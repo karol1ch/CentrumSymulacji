@@ -65,11 +65,10 @@ public class EditScenarioController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         currentScenario = mainApp.getAppState().getScenarioToShow();
-        Scenario scenarioToEdit = currentScenario;
-        if (scenarioToEdit == null) {
-            scenarioToEdit = createEmptyScenario();
+        if (currentScenario == null) {
+            currentScenario = createEmptyScenario();
         }
-        scenarioName.setText(scenarioToEdit.getName());
+        scenarioName.setText(currentScenario.getName());
 
         returnToMainMenu.setOnAction(event -> {
             try {
@@ -88,73 +87,64 @@ public class EditScenarioController extends AbstractController {
 
         });
 
+        stateNameEdit.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(currentEditedState != null){
+                currentEditedState.setName(newValue);
+                graph.refresh();
+            }
+        });
+        stateDescriptionEdit.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(currentEditedState != null){
+                currentEditedState.setDescription(newValue);
+                graph.refresh();
+            }
+        });
+
 
         SwingNode graphSwingNode = new SwingNode();
         centerPane.getChildren().add(graphSwingNode);
         centerPane.setPrefWidth(1024);
         centerPane.setPrefHeight(768);
 
-        graph = ScenarioGraphConverter.scenarioToGraph(scenarioToEdit);
-
+        graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
+        graph.setCellsEditable(false);
 
         addNewVertexButton.setOnAction(event -> {
             graph.insertVertex(
                     graph.getDefaultParent(),
                     null,
-                    new State(
-                            currentScenario.getNextId(),
+                    //id nieważne bo i tak przy zapisywaniu jest brane z identyfikatorów jgrapha
+                    new State(0,
                             "Default name",
                             new LinkedList<>(), null), 100.0, 100.0, 100.0, 100.0);
             ;
         });
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                graph.setAllowDanglingEdges(false);
+        SwingUtilities.invokeLater(() -> {
+            graph.setAllowDanglingEdges(false);
 
-                mxGraphComponent graphComponent = new mxGraphComponent(graph);
-                graphSwingNode.setContent(initEditor(graphComponent));
+            mxGraphComponent graphComponent = new mxGraphComponent(graph);
+            graphSwingNode.setContent(initEditor(graphComponent));
+        });
+
+        graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) -> {
+            Object[] cells = ((mxGraphSelectionModel) sender).getCells();
+
+            currentEditedState = null;
+            stateNameEdit.textProperty().setValue("");
+            stateDescriptionEdit.textProperty().setValue("");
+            if (cells.length == 1) {
+                mxICell cell = (mxICell) cells[0];
+                if (cell.isVertex()) {
+                    State state = (State) (cell.getValue());
+                    currentEditedState = state;
+                    stateNameEdit.textProperty().setValue(state.getName());
+                    stateDescriptionEdit.textProperty().setValue(state.getDescription());
+                }
             }
         });
-        /*graph.getSelectionModel().addListener(mxEvent.CHANGE, new mxEventSource.mxIEventListener() {
-            @Override
-            public void invoke(Object sender, mxEventObject evt) {
-                Object[] cells = ((mxGraphSelectionModel) sender).getCells();
-                if (currentEditedState != null && stateNameEdit.textProperty().isBound()) {
-                    String name = stateNameEdit.textProperty().getValue();
-                    stateNameEdit.textProperty().unbindBidirectional(currentEditedState.getNameProperty());
-                    currentEditedState.getNameProperty().setValue(name);
-                }
-                if (currentEditedState != null && stateDescriptionEdit.textProperty().isBound()) {
-                    String description = stateDescriptionEdit.textProperty().getValue();
-                    stateDescriptionEdit.textProperty().unbindBidirectional(currentEditedState.getDescriptionProperty());
-                    currentEditedState.getDescriptionProperty().setValue(description);
-                }
-                stateNameEdit.textProperty().setValue("");
-                stateDescriptionEdit.textProperty().setValue("");
-                currentEditedState = null;
-                if (cells.length == 1) {
-                    mxICell cell = (mxICell) cells[0];
-                    if (cell.isVertex()) {
-                        State state = (State) (cell.getValue());
-                        currentEditedState = state;
-                        stateNameEdit.textProperty().setValue(state.getName());
-                        stateDescriptionEdit.textProperty().setValue(state.getDescription());
-                        stateNameEdit.textProperty().bindBidirectional(state.getNameProperty());
-                        stateDescriptionEdit.textProperty().bindBidirectional(state.getDescriptionProperty());
-                    }
-                }
-                if (sender instanceof mxGraphSelectionModel) {
-                    for (Object cell : ((mxGraphSelectionModel) sender).getCells()) {
-                        System.out.println("cell=" + graph.getLabel(cell));
-                    }
-                }
-            }
-        });*/
-
-        //graphSwingNode.setContent(graphComponent);
-        //graphSwingNode.setContent(editorFrame);
     }
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {

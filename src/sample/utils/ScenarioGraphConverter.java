@@ -24,7 +24,7 @@ public class ScenarioGraphConverter {
         graph.getModel().beginUpdate();
         try
         {
-            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, s.getNumber().toString(), s, 280, 320, 80,
+            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, null, s, 280, 320, 80,
                     30)));
             scenario.getStates().values().stream().forEach(s -> {
                 s.getChildren()
@@ -48,17 +48,17 @@ public class ScenarioGraphConverter {
         Object[] childCells = graph.getChildVertices(graph.getDefaultParent());
         for (Object childCell : childCells) {
             mxCell cell = (mxCell)childCell;
-           State state = (State)cell.getValue();
+            State state = (State)cell.getValue();
             int edgeCount = cell.getEdgeCount();
             List<Integer> children = new ArrayList<>();
             for(int i = 0;i< edgeCount;i++){
                 mxCell edge = (mxCell)cell.getEdgeAt(i);
                 if(edge.getSource() == cell){
-                    State childState = (State) edge.getTarget().getValue();
-                    children.add(childState.getNumber());
+                    children.add(Integer.valueOf(edge.getTarget().getId()));
                 }
             }
-            newScenario.getStates().put(state.getNumber(),new State(state.getNumber(),state.getName(),children,"some description"));
+            Integer id = Integer.valueOf(cell.getId());
+            newScenario.getStates().put(id,new State(id,state.getName(),children,state.getDescription()));
 
         }
         return newScenario;

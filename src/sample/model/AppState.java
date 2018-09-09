@@ -1,11 +1,5 @@
 package sample.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
