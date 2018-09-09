@@ -68,4 +68,7 @@ public class Scenario implements Serializable {
         return scenario;
     }
 
+    public Integer getNextId() {
+        return getStates().keySet().stream().max(Integer::compareTo).get()+1;
+    }
 }
