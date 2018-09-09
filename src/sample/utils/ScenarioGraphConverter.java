@@ -30,7 +30,7 @@ public class ScenarioGraphConverter {
                 s.getChildren()
                         .forEach(childNumber -> graph.insertEdge(parent, null, null, vertices.get(s.getNumber()), vertices.get(childNumber)));
             });
-            graph.setAutoSizeCells(true);
+           // graph.setAutoSizeCells(true);
             graph.setMinimumGraphSize(new mxRectangle(0,0,1200,1000));
             new mxHierarchicalLayout(graph).execute(graph.getDefaultParent());
             graph.refresh();

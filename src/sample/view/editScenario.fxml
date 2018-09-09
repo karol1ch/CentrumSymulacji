@@ -3,9 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane stylesheets="/sample/css/appStyle.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
@@ -32,5 +34,16 @@
    <center>
       <AnchorPane fx:id="centerPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" />
    </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="addNewVertexButton" mnemonicParsing="false" text="Dodaj stan" />
+            <Label text="Nazwa stanu" />
+            <TextField fx:id="stateNameEdit" />
+            <Label text="Dodatkowy opis" />
+            <TextField fx:id="stateDescriptionEdit" />
+         </children>
+      </VBox>
+   </right>
 
 </BorderPane>
