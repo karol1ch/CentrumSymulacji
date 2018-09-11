@@ -6,7 +6,6 @@ import java.util.*;
 public class Scenario implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     public static final String FIRST_STATE_NAME = "START";
     public static final String LAST_STATE_NAME = "KONIEC";
 
@@ -16,8 +15,11 @@ public class Scenario implements Serializable {
     }
 
 
+
     //TODO konstruktor z prawdziwego zdarzenia (zawierający wymagane pola)
     private String name;
+
+    private  String pathToFile;
 
     private Map<Integer,State> states;
 
@@ -47,6 +49,14 @@ public class Scenario implements Serializable {
         this.name = name;
     }
 
+    public String getPathToFile() {
+        return pathToFile;
+    }
+
+    public void setPathToFile(String pathToFile) {
+        this.pathToFile = pathToFile;
+    }
+
     public State getInitialState() throws Exception {
         //TODO sprawdzenie, że powinien być dokładnie jeden stan START (nie więcej)
         return states.values().stream()
@@ -64,6 +74,7 @@ public class Scenario implements Serializable {
         states.put(endState.getNumber(),endState);
         scenario.setStates(states);
         scenario.setName("Nowy scenariusz");
+        scenario.setPathToFile("");
         scenario.setChecklist(new LinkedList<>());
         return scenario;
     }

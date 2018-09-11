@@ -2,18 +2,15 @@ package sample.utils;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxICell;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import sample.model.Scenario;
 import sample.model.State;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ScenarioGraphConverter {
     public static mxGraph scenarioToGraph(Scenario scenario) {

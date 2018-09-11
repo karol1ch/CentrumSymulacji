@@ -1,19 +1,14 @@
 package sample.controller;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import javafx.util.Pair;
@@ -86,16 +81,21 @@ public class ChooseScenarioController extends AbstractController{
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Błędny login lub hasło.");
-
             ButtonType button = new ButtonType("Ponów próbę");
             alert.getButtonTypes().clear();
-            //alert.getButtonTypes().add(button);
             alert.getButtonTypes().addAll(button, new ButtonType("Zamknij", ButtonBar.ButtonData.CANCEL_CLOSE));
             Optional<ButtonType> option = alert.showAndWait();
             if(option.get() == button){
-                checkAccess();
+                if(checkAccess()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            return false;
+            else {
+                return false;
+            }
         }
     }
 

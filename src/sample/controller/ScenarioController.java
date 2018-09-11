@@ -104,7 +104,7 @@ public class ScenarioController extends AbstractController {
     private void openFile(){
 
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "OpisyScenariuszy" + File.separator + currentScenario.getName()+".docx");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "OpisyScenariuszy" + File.separator + currentScenario.getPathToFile());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -238,6 +238,7 @@ public class ScenarioController extends AbstractController {
         scrollPane.setFitToWidth(true);
         messageField.setVisible(false);
         descriptionButton.setOnAction(event -> {
+            System.out.println(currentScenario.getPathToFile());
             openFile();
         });
     }

@@ -33,6 +33,7 @@ public class ScenariosReaderWriter {
             Scenario scenario = new Scenario();
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             String scenarioName = reader.readLine();
+            String pathToFile = reader.readLine();
             String scenarioChecklistEncoded = reader.readLine();
             List<String> checklist = Arrays.stream(scenarioChecklistEncoded.split(";")).collect(Collectors.toList());
 
@@ -57,6 +58,7 @@ public class ScenariosReaderWriter {
             reader.close();
             scenario.setStates(states);
             scenario.setName(scenarioName);
+            scenario.setPathToFile(pathToFile);
             scenario.setChecklist(checklist);
             return scenario;
         } catch (Exception e) {

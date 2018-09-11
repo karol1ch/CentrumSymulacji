@@ -6,6 +6,7 @@ import java.util.List;
 public class State implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
     private Integer number;
 
     private String description;
@@ -56,6 +57,7 @@ public class State implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     @Override
     public String toString() {

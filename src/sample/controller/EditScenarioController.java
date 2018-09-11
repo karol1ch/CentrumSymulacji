@@ -1,18 +1,20 @@
 package sample.controller;
 
-import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.*;
+import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxEvent;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphSelectionModel;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import sample.Main;
 import sample.editor.GraphEditor;
 import sample.model.Scenario;
@@ -22,9 +24,10 @@ import sample.utils.ScenariosReaderWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -32,6 +35,7 @@ import java.util.ResourceBundle;
 public class EditScenarioController extends AbstractController {
 
     private Scenario currentScenario;
+    private String pathToFile;
 
     @FXML
     private Button returnToMainMenu;
@@ -43,7 +47,10 @@ public class EditScenarioController extends AbstractController {
     private Button addNewVertexButton;
 
     @FXML
-    private Label scenarioName;
+    private Button setDesc;
+
+    @FXML
+    private TextField scenarioName;
 
     @FXML
     private TextField stateDescriptionEdit;
@@ -69,7 +76,7 @@ public class EditScenarioController extends AbstractController {
             currentScenario = createEmptyScenario();
         }
         scenarioName.setText(currentScenario.getName());
-
+        pathToFile = currentScenario.getPathToFile();
         returnToMainMenu.setOnAction(event -> {
             try {
                 mainApp.initChooseScenarioView();
@@ -80,10 +87,37 @@ public class EditScenarioController extends AbstractController {
 
         saveButton.setOnAction(event -> {
 
-            Scenario scenarioToSave = ScenarioGraphConverter.graphToScenario(graph);
-            scenarioToSave.setName("New scenario");
-            ScenariosReaderWriter scenarioReaderWriter = new ScenariosReaderWriter();
-            scenarioReaderWriter.serializeScenario(scenarioToSave, Paths.get("Scenariusze", "default.format").toString());
+            if(pathToFile.equals("")) {
+                setErrorDialog("Nie dodano pliku z opisem.");
+            }
+            else if( currentScenario.getName().equals("Nowy scenariusz")){
+                setErrorDialog("Nie dodano nazwy scenariusza.");
+            }
+            else{
+                Scenario scenarioToSave = ScenarioGraphConverter.graphToScenario(graph);
+                scenarioToSave.setName(currentScenario.getName());
+                File source = new File(pathToFile);
+                File dest = new File("OpisyScenariuszy" + File.separator + currentScenario.getName() + ".docx");
+                try {
+                    copyFileUsingJava7Files(source, dest);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                scenarioToSave.setPathToFile(currentScenario.getName() + ".docx");
+                ScenariosReaderWriter scenarioReaderWriter = new ScenariosReaderWriter();
+                scenarioReaderWriter.serializeScenario(scenarioToSave, Paths.get("Scenariusze", currentScenario.getName() + ".format").toString());
+                setInfoDialog("Zapisywanie zakończone.");
+            }
+
+        });
+
+        setDesc.setOnAction(event -> {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Dodaj plik z opisem");
+            File selectedFile = fileChooser.showOpenDialog(new Stage());
+            pathToFile = selectedFile.getAbsolutePath();
+
 
         });
 
@@ -102,10 +136,15 @@ public class EditScenarioController extends AbstractController {
             }
         });
 
+        scenarioName.textProperty().addListener((observable, oldValue, newValue) -> {
+            currentScenario.setName(newValue);
+            graph.refresh();
+        });
+
 
         SwingNode graphSwingNode = new SwingNode();
         centerPane.getChildren().add(graphSwingNode);
-        centerPane.setPrefWidth(1024);
+        centerPane.setPrefWidth(500);
         centerPane.setPrefHeight(768);
 
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
@@ -145,6 +184,28 @@ public class EditScenarioController extends AbstractController {
                 }
             }
         });
+    }
+
+    private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
+        Files.copy(source.toPath(), dest.toPath());
+    }
+
+    private void setErrorDialog( String alertName){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(alertName);
+        alert.showAndWait();
+
+    }
+
+    private void setInfoDialog(String name){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(name);
+
+        alert.showAndWait();
     }
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {

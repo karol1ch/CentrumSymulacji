@@ -95,7 +95,7 @@ public class EditorMenuBar extends JMenuBar
 				new ActionListener()
 				{
 					/**
-					 * 
+					 *
 					 */
 					public void actionPerformed(ActionEvent e)
 					{
@@ -287,7 +287,7 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("preferPageSize"), "PreferPageSize", true, new ActionListener()
 		{
 			/**
-			 * 
+			 *
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
@@ -315,7 +315,7 @@ public class EditorMenuBar extends JMenuBar
 		submenu.add(new TogglePropertyItem(graphComponent, mxResources.get("centerPage"), "CenterPage", true, new ActionListener()
 		{
 			/**
-			 * 
+			 *
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
