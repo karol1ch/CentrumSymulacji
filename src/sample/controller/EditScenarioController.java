@@ -1,19 +1,24 @@
 package sample.controller;
 
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphSelectionModel;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.Main;
@@ -32,6 +37,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+
+import static javax.swing.ScrollPaneConstants.*;
 
 public class EditScenarioController extends AbstractController {
 
@@ -63,7 +70,7 @@ public class EditScenarioController extends AbstractController {
     private TextArea checkListEdit;
 
     @FXML
-    private AnchorPane centerPane;
+    private SwingNode someSwingNode;
 
     private mxGraph graph;
 
@@ -156,11 +163,6 @@ public class EditScenarioController extends AbstractController {
         });
 
 
-        SwingNode graphSwingNode = new SwingNode();
-        centerPane.getChildren().add(graphSwingNode);
-        centerPane.setPrefWidth(500);
-        centerPane.setPrefHeight(768);
-
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
         graph.setCellsEditable(false);
 
@@ -179,7 +181,10 @@ public class EditScenarioController extends AbstractController {
             graph.setAllowDanglingEdges(false);
 
             mxGraphComponent graphComponent = new mxGraphComponent(graph);
-            graphSwingNode.setContent(initEditor(graphComponent));
+
+            GraphEditor graphEditor = initEditor(graphComponent);
+
+            someSwingNode.setContent(graphEditor);
         });
 
         graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) -> {
@@ -223,10 +228,8 @@ public class EditScenarioController extends AbstractController {
     }
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {
-
-        mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
-        mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
-
+        graphComponent.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        graphComponent.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         GraphEditor editor = new GraphEditor("something", graphComponent);
         return editor;
     }

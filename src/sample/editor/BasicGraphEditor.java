@@ -160,7 +160,7 @@ public class BasicGraphEditor extends JPanel
 
 		// Creates the inner split pane that contains the library with the
 		// palettes and the graph outline on the left side of the window
-		JSplitPane inner = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+/*		JSplitPane inner = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				libraryPane, graphOutline);
 		inner.setDividerLocation(320);
 		inner.setResizeWeight(1);
@@ -174,7 +174,7 @@ public class BasicGraphEditor extends JPanel
 		outer.setOneTouchExpandable(true);
 		outer.setDividerLocation(200);
 		outer.setDividerSize(6);
-		outer.setBorder(null);
+		outer.setBorder(null);*/
 
 		// Creates the status bar
 		statusBar = createStatusBar();
@@ -184,7 +184,7 @@ public class BasicGraphEditor extends JPanel
 
 		// Puts everything together
 		setLayout(new BorderLayout());
-		add(outer, BorderLayout.CENTER);
+		add(graphComponent, BorderLayout.CENTER);
 		add(statusBar, BorderLayout.SOUTH);
 		installToolBar();
 
