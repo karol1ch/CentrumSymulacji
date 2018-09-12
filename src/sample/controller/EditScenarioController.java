@@ -11,6 +11,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -53,10 +54,13 @@ public class EditScenarioController extends AbstractController {
     private TextField scenarioName;
 
     @FXML
-    private TextField stateDescriptionEdit;
+    private TextArea stateDescriptionEdit;
 
     @FXML
-    private TextField stateNameEdit;
+    private TextArea stateNameEdit;
+
+    @FXML
+    private TextArea checkListEdit;
 
     @FXML
     private AnchorPane centerPane;
@@ -77,6 +81,7 @@ public class EditScenarioController extends AbstractController {
         }
         scenarioName.setText(currentScenario.getName());
         pathToFile = currentScenario.getPathToFile();
+
         returnToMainMenu.setOnAction(event -> {
             try {
                 mainApp.initChooseScenarioView();
@@ -116,10 +121,19 @@ public class EditScenarioController extends AbstractController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Dodaj plik z opisem");
             File selectedFile = fileChooser.showOpenDialog(new Stage());
-            pathToFile = selectedFile.getAbsolutePath();
+            if(selectedFile.getAbsolutePath().endsWith(".docx")){
+                pathToFile = selectedFile.getAbsolutePath();
+            }
+            else{
+                setErrorDialog("Plik nie jest plikiem docx.");
+            }
+
 
 
         });
+        for( String line: currentScenario.getCheckListStates()){
+            checkListEdit.appendText("- " + line + "\n");
+        }
 
         stateNameEdit.textProperty().addListener((observable, oldValue, newValue) -> {
 

@@ -238,7 +238,6 @@ public class ScenarioController extends AbstractController {
         scrollPane.setFitToWidth(true);
         messageField.setVisible(false);
         descriptionButton.setOnAction(event -> {
-            System.out.println(currentScenario.getPathToFile());
             openFile();
         });
     }
