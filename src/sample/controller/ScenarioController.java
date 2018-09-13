@@ -16,15 +16,19 @@ import sample.Main;
 import sample.model.Scenario;
 import sample.model.State;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class ScenarioController extends AbstractController {
 
     private Scenario currentScenario;
     private State currentState;
+    private State nextSa;
     private boolean firstLoop = false;
     private int progressChange;
     private int secondsSum;
@@ -79,6 +83,9 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private Button descriptionButton;
+
+    @FXML
+    private Button restartButton;
 
     @FXML
     private TextArea messageField;
@@ -175,13 +182,15 @@ public class ScenarioController extends AbstractController {
         timeline.playFromStart();
     }
 
-    private void setMessageField(){
-        if("".equals(currentState.getDescription())){
+    private boolean setMessageField(State state){
+        if("".equals(state.getDescription())){
             messageField.setVisible(false);
+            return false;
         }
         else{
-            messageField.setText(currentState.getDescription());
+            messageField.setText(state.getDescription());
             messageField.setVisible(true);
+            return true;
         }
     }
 
@@ -191,12 +200,18 @@ public class ScenarioController extends AbstractController {
         if(firstLoop){
             progress();
         }
-        setMessageField();
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listView.setItems(items);  // items -> stateHistoryList
         addToList(currentState.getName());
         listView.scrollTo(items.size());
         List<Integer> children = currentState.getChildren();
+        for(Integer integer: children){
+            if(setMessageField(currentScenario.getStates().get(integer))){
+                break;
+            }
+
+
+        }
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());
             button.setOnAction((e)->{
@@ -239,6 +254,15 @@ public class ScenarioController extends AbstractController {
         messageField.setVisible(false);
         descriptionButton.setOnAction(event -> {
             openFile();
+        });
+
+        restartButton.setOnAction(event -> {
+            mainApp.getAppState().setScenarioToShow(currentScenario);
+            try {
+                mainApp.initScenarioView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 

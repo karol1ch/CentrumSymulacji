@@ -267,24 +267,24 @@ public class BasicGraphEditor extends JPanel
 	public EditorPalette insertPalette(String title)
 	{
 		final EditorPalette palette = new EditorPalette();
-		final JScrollPane scrollPane = new JScrollPane(palette);
-		scrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		libraryPane.add(title, scrollPane);
+	//	final JScrollPane scrollPane = new JScrollPane(palette);
+	//	scrollPane
+	//			.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	//	scrollPane
+	//			.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	//	libraryPane.add(title, scrollPane);
 
 		// Updates the widths of the palettes if the container size changes
 		libraryPane.addComponentListener(new ComponentAdapter()
 		{
 			/**
-			 * 
+			 *
 			 */
 			public void componentResized(ComponentEvent e)
 			{
-				int w = scrollPane.getWidth()
-						- scrollPane.getVerticalScrollBar().getWidth();
-				palette.setPreferredWidth(w);
+			//	int w = scrollPane.getWidth()
+			//			- scrollPane.getVerticalScrollBar().getWidth();
+		//		palette.setPreferredWidth(w);
 			}
 
 		});

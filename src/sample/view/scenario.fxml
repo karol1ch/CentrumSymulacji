@@ -17,9 +17,10 @@
    <top>
       <HBox prefHeight="50.0" spacing="100.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="returnToMainMenu" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" text="Menu główne" prefWidth="180" />
-             <Button fx:id="descriptionButton" mnemonicParsing="false" text="Otwórz opis" prefWidth="180" />
-            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0"  styleClass="label-heading" textAlignment="CENTER">
+            <Button fx:id="returnToMainMenu" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" prefWidth="180" text="Menu główne" />
+             <Button fx:id="descriptionButton" mnemonicParsing="false" prefWidth="180" text="Otwórz opis" />
+            <Button fx:id="restartButton" mnemonicParsing="false" text="Restart" />
+            <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" styleClass="label-heading" textAlignment="CENTER">
                <font>
                   <Font name="Cooper Black" size="27.0" />
                </font>

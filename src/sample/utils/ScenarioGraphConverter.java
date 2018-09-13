@@ -30,6 +30,7 @@ public class ScenarioGraphConverter {
            // graph.setAutoSizeCells(true);
             graph.setMinimumGraphSize(new mxRectangle(0,0,1200,1000));
             new mxHierarchicalLayout(graph).execute(graph.getDefaultParent());
+
             graph.refresh();
 
         }

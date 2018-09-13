@@ -1,24 +1,16 @@
 package sample.controller;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphSelectionModel;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.Main;
@@ -29,7 +21,6 @@ import sample.utils.ScenarioGraphConverter;
 import sample.utils.ScenariosReaderWriter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +29,8 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import static javax.swing.ScrollPaneConstants.*;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 public class EditScenarioController extends AbstractController {
 
@@ -138,9 +130,7 @@ public class EditScenarioController extends AbstractController {
 
 
         });
-        for( String line: currentScenario.getCheckListStates()){
-            checkListEdit.appendText("- " + line + "\n");
-        }
+
 
         stateNameEdit.textProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -173,7 +163,7 @@ public class EditScenarioController extends AbstractController {
                     //id nieważne bo i tak przy zapisywaniu jest brane z identyfikatorów jgrapha
                     new State(0,
                             "Default name",
-                            new LinkedList<>(), null), 100.0, 100.0, 100.0, 100.0);
+                            new LinkedList<>(), null), 100.0, 100.0, 80.0, 30.0);
             ;
         });
 
