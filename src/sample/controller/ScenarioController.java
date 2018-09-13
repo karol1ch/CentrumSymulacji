@@ -209,8 +209,6 @@ public class ScenarioController extends AbstractController {
             if(setMessageField(currentScenario.getStates().get(integer))){
                 break;
             }
-
-
         }
         List<Button> nextStepButtons = children.stream().map(currentScenario.getStates()::get).map(s -> {
             Button button = new Button(s.getName());

@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import sample.Main;
@@ -41,6 +42,10 @@ public class ChooseScenarioController extends AbstractController{
     public ChooseScenarioController(Main mainApp) {
         super(mainApp);
     }
+
+
+
+
 
 
     private boolean checkAccess(){
@@ -109,10 +114,16 @@ public class ChooseScenarioController extends AbstractController{
             listView.setCellFactory(new Callback<ListView<Scenario>, ListCell<Scenario>>() {
                 @Override
                 public ListCell<Scenario> call(ListView<Scenario> param) {
-                    return new ListCell<Scenario>(){
+                   ListCell<Scenario> cell = new ListCell<Scenario>(){
                         @Override
                         protected void updateItem(Scenario scenario, boolean empty) {
                             super.updateItem(scenario, empty);
+
+                            if (!empty) {
+                                Text text = new Text(scenario.getName());
+                                text.wrappingWidthProperty().bind(listView.widthProperty().subtract(10));
+                                setGraphic(text);
+                            }
 
                             if(scenario==null || empty){
 
@@ -122,6 +133,7 @@ public class ChooseScenarioController extends AbstractController{
                             }
                         }
                     };
+                    return cell;
                 }
             });
         }

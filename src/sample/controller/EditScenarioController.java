@@ -5,12 +5,13 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphSelectionModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.Main;
@@ -36,6 +37,10 @@ public class EditScenarioController extends AbstractController {
 
     private Scenario currentScenario;
     private String pathToFile;
+    int i = 3;
+
+   // ObservableList<String> items = FXCollections.observableArrayList();
+
 
     @FXML
     private Button returnToMainMenu;
@@ -59,7 +64,13 @@ public class EditScenarioController extends AbstractController {
     private TextArea stateNameEdit;
 
     @FXML
-    private TextArea checkListEdit;
+    private VBox checkListBox;
+
+    @FXML
+    private Button addNewStringButton;
+
+    @FXML
+    private ListView<String> checkListView;
 
     @FXML
     private SwingNode someSwingNode;
@@ -80,6 +91,19 @@ public class EditScenarioController extends AbstractController {
         }
         scenarioName.setText(currentScenario.getName());
         pathToFile = currentScenario.getPathToFile();
+
+
+        ObservableList<String> items = FXCollections.observableArrayList("test1", "test2");
+        ListView<String> list = new ListView<>(items);
+        list.setCellFactory(TextFieldListCell.forListView());
+        list.setEditable(true);
+
+        addNewStringButton.setOnAction(event -> {
+            list.getItems().add(i-1, "test" + i);
+            list.edit(i -2);
+            i++;
+        });
+        checkListBox.getChildren().add(0,list);
 
         returnToMainMenu.setOnAction(event -> {
             try {
