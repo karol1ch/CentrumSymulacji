@@ -16,6 +16,7 @@ import javafx.util.Pair;
 import sample.Main;
 import sample.model.Scenario;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -35,6 +36,9 @@ public class ChooseScenarioController extends AbstractController{
 
     @FXML
     private Button newScenarioButton;
+
+    @FXML
+    private Button deleteButton;
 
     @FXML
     private GridPane gridPane;
@@ -145,12 +149,30 @@ public class ChooseScenarioController extends AbstractController{
                 if(newValue != null){
                     runScenarioButton.setDisable(false);
                     editScenarioButton.setDisable(false);
+                    deleteButton.setDisable(false);
 
                 }else{
                     runScenarioButton.setDisable(true);
                     editScenarioButton.setDisable(true);
+                    deleteButton.setDisable(true);
                 }
             }
+        });
+
+        deleteButton.setOnAction(event -> {
+            if(checkAccess()){
+                Scenario scenario = listView.getSelectionModel().getSelectedItem();
+                File file1 = new File("Scenariusze"+ File.separator+scenario.getName() + ".format");
+                File file2 = new File("OpisyScenariuszy" + File.separator + scenario.getPathToFile());
+                file1.delete();
+                file2.delete();
+                try {
+                    mainApp.initChooseScenarioView();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
 
         runScenarioButton.setOnAction(event -> {

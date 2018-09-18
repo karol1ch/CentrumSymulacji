@@ -19,9 +19,7 @@ import sample.model.State;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScenarioController extends AbstractController {
@@ -96,6 +94,7 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private void handleMainMenuButtonAction( ActionEvent actionEvent) throws IOException{
+        timeline.stop();
         mainApp.initChooseScenarioView();
     }
 
@@ -172,6 +171,7 @@ public class ScenarioController extends AbstractController {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
                         event1 -> {
+                            progress();
                             timeSeconds++;
                             timeLabel.setText(minute + " min  " + timeSeconds.toString() + " s");
                             if(timeSeconds == 59){
@@ -196,6 +196,8 @@ public class ScenarioController extends AbstractController {
 
 
     private void updateScenarioStateView() {
+
+
 
         if(firstLoop){
             progress();
@@ -224,15 +226,16 @@ public class ScenarioController extends AbstractController {
         setWrapping();
 
         if(nextStepButtons.isEmpty()){
-            timeline.stop();
             minute = secondsSum / 60;
             secondsSum = secondsSum % 60;
-            timeLabel.setText(minute + " minut  " + secondsSum + " sekund");
-            //TODO
+            Label label = new Label("Czas scenariusza: " + minute + " minut  " + secondsSum + " sekund");
+            vBox.getChildren().add(label);
+
 
         }
         firstLoop = true;
     }
+
 
     public void addToList(String string){
         items.add(string);
@@ -257,11 +260,13 @@ public class ScenarioController extends AbstractController {
         restartButton.setOnAction(event -> {
             mainApp.getAppState().setScenarioToShow(currentScenario);
             try {
+                timeline.stop();
                 mainApp.initScenarioView();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
     }
 
 

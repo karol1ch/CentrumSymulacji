@@ -17,20 +17,20 @@
    <bottom>
       <BorderPane maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <left>
-                <Button fx:id="editScenarioButton" disable="true" mnemonicParsing="false" prefHeight="26.0"  text="Edytuj scenariusz" BorderPane.alignment="CENTER">
+                <Button fx:id="editScenarioButton" disable="true" mnemonicParsing="false" prefHeight="26.0" text="Edytuj scenariusz" BorderPane.alignment="CENTER">
                  <BorderPane.margin>
                      <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                  </BorderPane.margin></Button>
          </left>
          <center>
-             <Button fx:id="runScenarioButton" disable="true" mnemonicParsing="false" prefHeight="26.0"  text="Uruchom scenariusz" BorderPane.alignment="CENTER">
-             <BorderPane.margin>
-                 <Insets bottom="20.0" left="10.0" top="20.0" />
-             </BorderPane.margin></Button>
+
+                   <Button fx:id="runScenarioButton" disable="true" mnemonicParsing="false" prefHeight="26.0" text="Uruchom scenariusz" />
+
+
 
          </center>
          <right>
-                   <Button fx:id="newScenarioButton" mnemonicParsing="false" prefHeight="26.0"  text="Dodaj scenariusz" BorderPane.alignment="CENTER">
+                   <Button fx:id="newScenarioButton" mnemonicParsing="false" prefHeight="26.0" text="Dodaj scenariusz" BorderPane.alignment="CENTER">
                <padding>
                   <Insets right="20.0" />
                </padding>
@@ -38,6 +38,9 @@
                   <Insets bottom="20.0" left="10.0" right="20.0" top="20.0" />
                </BorderPane.margin></Button>
          </right>
+         <bottom>
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" prefHeight="26.0" text="Usuń scenariusz" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </bottom>
    <left>
