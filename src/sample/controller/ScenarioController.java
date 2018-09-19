@@ -94,7 +94,9 @@ public class ScenarioController extends AbstractController {
 
     @FXML
     private void handleMainMenuButtonAction( ActionEvent actionEvent) throws IOException{
-        timeline.stop();
+        if(firstLoop) {
+            timeline.stop();
+        }
         mainApp.initChooseScenarioView();
     }
 
@@ -104,6 +106,7 @@ public class ScenarioController extends AbstractController {
         checkList();
         secondsSum = 0;
         minute = 0;
+        firstLoop = false;
         stopWatch();
     }
 
@@ -260,7 +263,9 @@ public class ScenarioController extends AbstractController {
         restartButton.setOnAction(event -> {
             mainApp.getAppState().setScenarioToShow(currentScenario);
             try {
-                timeline.stop();
+                if(firstLoop){
+                timeline.stop();}
+
                 mainApp.initScenarioView();
             } catch (IOException e) {
                 e.printStackTrace();

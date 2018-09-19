@@ -12,8 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import sample.Main;
 import sample.editor.GraphEditor;
 import sample.model.Scenario;
@@ -37,7 +39,6 @@ public class EditScenarioController extends AbstractController {
 
     private Scenario currentScenario;
     private String pathToFile;
-    int i = 3;
 
    // ObservableList<String> items = FXCollections.observableArrayList();
 
@@ -79,12 +80,16 @@ public class EditScenarioController extends AbstractController {
 
     private State currentEditedState;
 
+
+
     public EditScenarioController(Main mainApp) {
         super(mainApp);
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         currentScenario = mainApp.getAppState().getScenarioToShow();
         if (currentScenario == null) {
             currentScenario = createEmptyScenario();
@@ -93,15 +98,35 @@ public class EditScenarioController extends AbstractController {
         pathToFile = currentScenario.getPathToFile();
 
 
-        ObservableList<String> items = FXCollections.observableArrayList("test1", "test2");
-        ListView<String> list = new ListView<>(items);
+        ObservableList<String> items = FXCollections.observableArrayList(currentScenario.getCheckListStates());
+        ListView list = new ListView<>(items);
+        list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        list.setItems(items);
         list.setCellFactory(TextFieldListCell.forListView());
         list.setEditable(true);
 
+        list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                ListCell<String> cell = new ListCell<String>() {
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            Text text = new Text(item);
+                            text.wrappingWidthProperty().bind(list.widthProperty().subtract(20));
+                            setGraphic(text);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
         addNewStringButton.setOnAction(event -> {
-            list.getItems().add(i-1, "test" + i);
-            list.edit(i -2);
-            i++;
+            list.getItems().add(currentScenario.getCheckListStates().size(), "Podaj nazwę");
+            currentScenario.setChecklist(list.getItems());
+            list.edit(currentScenario.getCheckListStates().size() - 1);
+
         });
         checkListBox.getChildren().add(0,list);
 
@@ -252,4 +277,6 @@ public class EditScenarioController extends AbstractController {
         Scenario emptyScenario = Scenario.createEmptyScenario();
         return emptyScenario;
     }
+
+
 }
