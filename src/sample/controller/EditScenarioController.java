@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxEvent;
@@ -32,8 +33,7 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.*;
 
 public class EditScenarioController extends AbstractController {
 
@@ -84,6 +84,7 @@ public class EditScenarioController extends AbstractController {
     private State currentEditedState;
 
     private ListView list;
+    private int blocksAdded;
 
     public EditScenarioController(Main mainApp) {
         super(mainApp);
@@ -218,6 +219,7 @@ public class EditScenarioController extends AbstractController {
 
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
         graph.setCellsEditable(false);
+        graph.setHtmlLabels(true);
 
         addNewVertexButton.setOnAction(event -> {
             graph.insertVertex(
@@ -226,8 +228,9 @@ public class EditScenarioController extends AbstractController {
                     //id nieważne bo i tak przy zapisywaniu jest brane z identyfikatorów jgrapha
                     new State(0,
                             "Default name",
-                            new LinkedList<>(), null), 100.0, 100.0, 80.0, 30.0);
+                            new LinkedList<>(), null), 100.0 + blocksAdded*5, 100.0+ blocksAdded*5, 100.0, 30.0,"overflow=hidden;");
             ;
+            blocksAdded++;
         });
 
         SwingUtilities.invokeLater(() -> {
@@ -256,6 +259,7 @@ public class EditScenarioController extends AbstractController {
                 }
             }
         });
+
     }
 
     private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
@@ -281,8 +285,9 @@ public class EditScenarioController extends AbstractController {
     }
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {
-        graphComponent.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
-        graphComponent.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+        blocksAdded = 0;
+        graphComponent.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+        graphComponent.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
         GraphEditor editor = new GraphEditor("something", graphComponent);
         return editor;
     }

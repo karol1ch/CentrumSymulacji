@@ -21,8 +21,8 @@ public class ScenarioGraphConverter {
         graph.getModel().beginUpdate();
         try
         {
-            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, null, s, 280, 320, 80,
-                    30)));
+            Map<Integer, Object> vertices = scenario.getStates().values().stream().collect(Collectors.toMap(s -> s.getNumber(), s -> graph.insertVertex(parent, null, s, 280, 320, 100,
+                    30, "overflow=hidden;")));
             scenario.getStates().values().stream().forEach(s -> {
                 s.getChildren()
                         .forEach(childNumber -> graph.insertEdge(parent, null, null, vertices.get(s.getNumber()), vertices.get(childNumber)));

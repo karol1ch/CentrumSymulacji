@@ -61,6 +61,6 @@ public class State implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return name.substring(0,Integer.min(name.length(),15));
     }
 }
