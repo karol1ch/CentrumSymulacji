@@ -71,6 +71,9 @@ public class EditScenarioController extends AbstractController {
     private Button addNewStringButton;
 
     @FXML
+    private Button saveCheckListButton;
+
+    @FXML
     private ListView<String> checkListView;
 
     @FXML
@@ -80,7 +83,7 @@ public class EditScenarioController extends AbstractController {
 
     private State currentEditedState;
 
-
+    private ListView list;
 
     public EditScenarioController(Main mainApp) {
         super(mainApp);
@@ -99,11 +102,7 @@ public class EditScenarioController extends AbstractController {
 
 
         ObservableList<String> items = FXCollections.observableArrayList(currentScenario.getCheckListStates());
-        ListView list = new ListView<>(items);
-        list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        list.setItems(items);
-        list.setCellFactory(TextFieldListCell.forListView());
-        list.setEditable(true);
+        list = new ListView<>(items);
 
         list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -113,7 +112,7 @@ public class EditScenarioController extends AbstractController {
                         super.updateItem(item, empty);
                         if (!empty) {
                             Text text = new Text(item);
-                            text.wrappingWidthProperty().bind(list.widthProperty().subtract(20));
+                            text.wrappingWidthProperty().bind(list.widthProperty().subtract(21));
                             setGraphic(text);
                         }
                     }
@@ -122,13 +121,27 @@ public class EditScenarioController extends AbstractController {
             }
         });
 
+        list.setCellFactory(TextFieldListCell.forListView());
+        list.setEditable(true);
+
+
         addNewStringButton.setOnAction(event -> {
-            list.getItems().add(currentScenario.getCheckListStates().size(), "Podaj nazwę");
-            currentScenario.setChecklist(list.getItems());
-            list.edit(currentScenario.getCheckListStates().size() - 1);
+            String s = "Podaj nazwę";
+            items.add(s);
+            list.scrollTo(items.size());
 
         });
         checkListBox.getChildren().add(0,list);
+
+
+
+        saveCheckListButton.setOnAction(event -> {
+            currentScenario.getCheckListStates().clear();
+            for(String s: items){
+                currentScenario.getCheckListStates().add(s);
+            }
+        });
+
 
         returnToMainMenu.setOnAction(event -> {
             try {
@@ -149,6 +162,7 @@ public class EditScenarioController extends AbstractController {
             else{
                 Scenario scenarioToSave = ScenarioGraphConverter.graphToScenario(graph);
                 scenarioToSave.setName(currentScenario.getName());
+                scenarioToSave.setChecklist(currentScenario.getCheckListStates());
                 File source = new File(pathToFile);
                 File dest = new File("OpisyScenariuszy" + File.separator + currentScenario.getName() + ".docx");
                 try {
