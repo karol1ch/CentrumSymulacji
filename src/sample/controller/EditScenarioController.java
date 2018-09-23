@@ -1,6 +1,5 @@
 package sample.controller;
 
-import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxEvent;
@@ -33,7 +32,8 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import static javax.swing.ScrollPaneConstants.*;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
 
 public class EditScenarioController extends AbstractController {
 
@@ -108,8 +108,8 @@ public class EditScenarioController extends AbstractController {
         list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                ListCell<String> cell = new ListCell<String>() {
-                    protected void updateItem(String item, boolean empty) {
+                TextFieldListCell<String> cell = new TextFieldListCell<String>() {
+                    public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!empty) {
                             Text text = new Text(item);
@@ -122,7 +122,6 @@ public class EditScenarioController extends AbstractController {
             }
         });
 
-        list.setCellFactory(TextFieldListCell.forListView());
         list.setEditable(true);
 
 
@@ -219,7 +218,7 @@ public class EditScenarioController extends AbstractController {
 
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
         graph.setCellsEditable(false);
-        graph.setHtmlLabels(true);
+        //graph.setHtmlLabels(true);
 
         addNewVertexButton.setOnAction(event -> {
             graph.insertVertex(
