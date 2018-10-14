@@ -196,3 +196,8 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-wrap-text: true;
 }
+
+#titleLabel {
+    -fx-wrap-text: true;
+    -fx-font-size: 80px;
+}

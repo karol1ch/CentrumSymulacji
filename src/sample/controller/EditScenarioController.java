@@ -12,10 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import sample.Main;
 import sample.editor.GraphEditor;
 import sample.model.Scenario;
@@ -79,6 +77,9 @@ public class EditScenarioController extends AbstractController {
     @FXML
     private SwingNode someSwingNode;
 
+    @FXML
+    private TextArea textCell;
+
     private mxGraph graph;
 
     private State currentEditedState;
@@ -94,6 +95,11 @@ public class EditScenarioController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        textCell.setEditable(false);
+        textCell.setMouseTransparent(true);
+        textCell.setFocusTraversable(false);
+
+
         currentScenario = mainApp.getAppState().getScenarioToShow();
         if (currentScenario == null) {
             currentScenario = createEmptyScenario();
@@ -105,24 +111,14 @@ public class EditScenarioController extends AbstractController {
         ObservableList<String> items = FXCollections.observableArrayList(currentScenario.getCheckListStates());
         list = new ListView<>(items);
 
-        list.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> stringListView) {
-                TextFieldListCell<String> cell = new TextFieldListCell<String>() {
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty) {
-                            Text text = new Text(item);
-                            text.wrappingWidthProperty().bind(list.widthProperty().subtract(21));
-                            setGraphic(text);
-                        }
-                    }
-                };
-                return cell;
-            }
+
+        list.setCellFactory(TextFieldListCell.forListView());
+        list.setEditable(true);
+
+        list.setOnMouseClicked(event -> {
+            textCell.setText(list.getSelectionModel().getSelectedItem().toString());
         });
 
-        list.setEditable(true);
 
 
         addNewStringButton.setOnAction(event -> {
@@ -218,7 +214,7 @@ public class EditScenarioController extends AbstractController {
 
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
         graph.setCellsEditable(false);
-        //graph.setHtmlLabels(true);
+        graph.setHtmlLabels(true);
 
         addNewVertexButton.setOnAction(event -> {
             graph.insertVertex(
