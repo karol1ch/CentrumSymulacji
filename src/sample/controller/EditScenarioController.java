@@ -30,8 +30,7 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
-import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.*;
 
 public class EditScenarioController extends AbstractController {
 
@@ -86,6 +85,8 @@ public class EditScenarioController extends AbstractController {
 
     private ListView list;
     private int blocksAdded;
+
+    GraphEditor graphEditor;
 
     public EditScenarioController(Main mainApp) {
         super(mainApp);
@@ -217,13 +218,26 @@ public class EditScenarioController extends AbstractController {
         graph.setHtmlLabels(true);
 
         addNewVertexButton.setOnAction(event -> {
+            double newNodeWidth = 100.0;
+            double newNodeHeight = 30.0;
+
+            double viewportPositionX = graphEditor.getGraphComponent().getViewport().getViewPosition().getX();
+            double viewportPositionY = graphEditor.getGraphComponent().getViewport().getViewPosition().getY();
+
+            double viewportWidth = graphEditor.getGraphComponent().getViewport().getWidth();
+            double viewportHeight = graphEditor.getGraphComponent().getViewport().getHeight();
+
+
+            double newNodePositionX = viewportPositionX + viewportWidth/2 - newNodeWidth/2;
+            double newNodePositionY = viewportPositionY + viewportHeight/2 - newNodeHeight/2;
+
             graph.insertVertex(
                     graph.getDefaultParent(),
                     null,
                     //id nieważne bo i tak przy zapisywaniu jest brane z identyfikatorów jgrapha
                     new State(0,
                             "Default name",
-                            new LinkedList<>(), null), 100.0 + blocksAdded*5, 100.0+ blocksAdded*5, 100.0, 30.0,"overflow=hidden;");
+                            new LinkedList<>(), null), newNodePositionX, newNodePositionY/*100.0 + blocksAdded*5, 100.0+ blocksAdded*5*/, newNodeWidth, newNodeHeight,"overflow=hidden;");
             ;
             blocksAdded++;
         });
@@ -233,7 +247,7 @@ public class EditScenarioController extends AbstractController {
 
             mxGraphComponent graphComponent = new mxGraphComponent(graph);
 
-            GraphEditor graphEditor = initEditor(graphComponent);
+            graphEditor = initEditor(graphComponent);
 
             someSwingNode.setContent(graphEditor);
         });
@@ -281,8 +295,8 @@ public class EditScenarioController extends AbstractController {
 
     private GraphEditor initEditor(mxGraphComponent graphComponent) {
         blocksAdded = 0;
-        graphComponent.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
-        graphComponent.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+        graphComponent.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
+        graphComponent.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
         GraphEditor editor = new GraphEditor("something", graphComponent);
         return editor;
     }

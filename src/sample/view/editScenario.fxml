@@ -31,11 +31,12 @@
         </HBox>
     </top>
    <center>
-       <ScrollPane prefHeight="200.0" prefWidth="500.0">
+       <SwingNode fx:id="someSwingNode" />
+      <!-- <ScrollPane prefHeight="200.0" prefWidth="500.0">
            <content>
                <SwingNode fx:id="someSwingNode" />
            </content>
-       </ScrollPane>
+       </ScrollPane>-->
    </center>
    <right>
       <VBox minHeight="700.0" minWidth="600.0" prefHeight="800.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
