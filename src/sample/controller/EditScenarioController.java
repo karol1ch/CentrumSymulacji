@@ -9,8 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,12 +27,15 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
-import static javax.swing.ScrollPaneConstants.*;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
 
 public class EditScenarioController extends AbstractController {
 
@@ -79,6 +84,9 @@ public class EditScenarioController extends AbstractController {
     @FXML
     private TextArea textCell;
 
+    @FXML
+    private Button helpButton;
+
     private mxGraph graph;
 
     private State currentEditedState;
@@ -90,6 +98,11 @@ public class EditScenarioController extends AbstractController {
 
     public EditScenarioController(Main mainApp) {
         super(mainApp);
+    }
+
+    public static String loadFromFile() throws IOException{
+        return Files.lines(Paths.get("instrukcja.txt"), Charset.forName("Cp1250"))
+                .collect(Collectors.joining("\n"));
     }
 
 
@@ -146,6 +159,27 @@ public class EditScenarioController extends AbstractController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });
+
+        helpButton.setOnAction( event -> {
+            VBox vbox = new VBox(20);
+            Stage stage = new Stage();
+            vbox.setStyle("-fx-padding: 10;");
+            Scene scene = new Scene(vbox, 500, 400);
+            stage.setTitle("Instrukcja dodawania Scenariusza");
+            stage.setScene(scene);
+            BorderPane borderPane = new BorderPane();
+            borderPane.setPrefSize(500.0, 400.0);
+            TextArea helpText = null;
+            try {
+                helpText = new TextArea(loadFromFile());
+                helpText.setEditable(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            borderPane.setCenter(helpText);
+            vbox.getChildren().add(borderPane);
+            stage.show();
         });
 
         saveButton.setOnAction(event -> {
