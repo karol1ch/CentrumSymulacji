@@ -169,7 +169,6 @@ public class EditScenarioController extends AbstractController {
             stage.setTitle("Instrukcja dodawania Scenariusza");
             stage.setScene(scene);
             BorderPane borderPane = new BorderPane();
-            borderPane.setPrefSize(500.0, 400.0);
             TextArea helpText = null;
             try {
                 helpText = new TextArea(loadFromFile());

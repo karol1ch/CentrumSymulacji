@@ -73,7 +73,6 @@ public class ScenariosReaderWriter {
                      new ObjectInputStream(new FileInputStream(file))) {
 
             Scenario scenario = (Scenario) ois.readObject();
-            System.out.println("Done");
             return scenario;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,7 +85,6 @@ public class ScenariosReaderWriter {
                      new ObjectOutputStream(new FileOutputStream(filePath))) {
 
             oos.writeObject(scenario);
-            System.out.println("Done");
 
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -200,7 +200,6 @@ public class ScenarioController extends AbstractController {
 
     private void updateScenarioStateView() {
 
-        System.out.println(currentScenario.getCheckListStates());
         if(firstLoop){
             progress();
         }
