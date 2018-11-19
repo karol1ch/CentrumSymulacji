@@ -18,15 +18,15 @@ import java.util.List;
 
 
 public class Main extends Application {
-    public static final String CHOOSE_SCENARIO_VIEW = "view" + File.separator + "chooseScenario.fxml";
-    public static final String SCENARIO_VIEW = "view" + File.separator + "scenario.fxml";
-    public static final String CHANGE_SCENARIO_VIEW = "view" + File.separator + "editScenario.fxml";
+    public static final String CHOOSE_SCENARIO_VIEW = "/chooseScenario.fxml";
+    public static final String SCENARIO_VIEW =  "/scenario.fxml";
+    public static final String CHANGE_SCENARIO_VIEW = "/editScenario.fxml";
 
     private AppState appState = new AppState();
     private BorderPane mainRoot;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        URL resource = getClass().getResource("view" + File.separator + "main.fxml");
+        URL resource = getClass().getResource( "/main.fxml");
         FXMLLoader loader = new FXMLLoader(resource);
         loader.setController(new MainController(this));
         mainRoot = loader.load();
